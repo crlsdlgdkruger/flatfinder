@@ -1,5 +1,4 @@
 import { Button } from 'primereact/button';
-import { FloatLabel } from 'primereact/floatlabel';
 import { InputText } from 'primereact/inputtext';
 import "./login.css"
 
@@ -8,15 +7,23 @@ export const Login = () => {
     <div className='login-container'>
       <div className=''>
         <h2>Sign In</h2>
-        <FloatLabel>
-          <InputText id="email" value={""} onChange={(e) => { }} />
+
+        {/* email input*/}
+        <div>
           <label htmlFor="email">Email</label>
-        </FloatLabel>
-        <FloatLabel>
-          <InputText id="password" value={""} onChange={(e) => { }} />
+          <InputText id="email" value={""} onChange={(e) => { }} type='email' />
+        </div>
+
+        {/* password input */}
+        <div>
           <label htmlFor="password">Password</label>
-        </FloatLabel>
+          <InputText id="password" value={""} onChange={(e) => { }} type='password' />
+        </div>
+
+        {/* login button */}
         <Button icon="pi pi-sign-in" label="Login" iconPos="right" />
+
+        {/* redirect link */}
         <p>Don't have an account yet? <a href='/register' className='redirect-link'>Sign Up</a></p>
       </div>
     </div>
