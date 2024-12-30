@@ -1,6 +1,8 @@
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
+import { Password } from 'primereact/password';
+
 import "./register.css"
 
 export const Register = () => {
@@ -36,13 +38,13 @@ export const Register = () => {
         {/* password input */}
         <div>
           <label htmlFor="password">Password</label>
-          <InputText id="password" value={""} onChange={(e) => { }} type='password' />
+          <Password id="password" value={""} onChange={(e) => { }} type='password' toggleMask />
         </div>
 
         {/* confirm password input */}
         <div>
           <label htmlFor="confirm-password">Confirm Password</label>
-          <InputText id="confirm-password" value={""} onChange={(e) => { }} type='password' />
+          <Password id="confirm-password" value={""} onChange={(e) => { }} type='password' toggleMask />
         </div>
 
         {/* register button  */}
