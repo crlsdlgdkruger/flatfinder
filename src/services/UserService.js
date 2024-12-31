@@ -18,6 +18,19 @@ export class UserService {
     const data = await getDocs(q);
     return getData(data);
   }
+
+  async register(user) {
+    const q = query(
+      this.usersCollectionRef,
+      where("email", "==", user.email)
+    );
+    const data = await getDocs(q);
+    if (data.docs.length === 0) {
+      return await addDoc(this.usersCollectionRef, user);
+    } else {
+      return null;
+    }
+  }
 }
 
 const getData = (data) => {

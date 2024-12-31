@@ -3,3 +3,8 @@
   border: 1px solid black;
   margin: 0 auto;
 }
+
+.p-error{
+  color: red;
+  font-size: 0.9em;
+}
