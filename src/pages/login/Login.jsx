@@ -7,6 +7,7 @@ import { UserService } from '../../services/UserService';
 import UserContext from '../../context/UserContext';
 
 import "./login.css"
+import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
 
@@ -14,6 +15,7 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const { user, updateUser } = useContext(UserContext);
   const [submitted, setSubmitted] = useState(false);
+  const navigate = useNavigate();
   const msgs = useRef([]);
 
   const addContentErrorMessage = () => {
@@ -32,17 +34,20 @@ export const Login = () => {
 
   useEffect(() => {
     if (user.length > 0) {
-      window.location.href = "/home";
+      navigate("/home");
     } else if (submitted) {
       addContentErrorMessage();
     }
-    console.log('USER: ', user);
+  }, [user]);
+
+  useEffect(() => {
+
   }, [user]);
 
   const login = async () => {
     const service = new UserService();
-    const user = await service.login(email, password);
-    updateUser(user);
+    const us = await service.login(email, password);
+    updateUser(us);
     setSubmitted(true);
   }
 
