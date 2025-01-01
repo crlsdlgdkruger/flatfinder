@@ -15,15 +15,21 @@ export const ViewFlat = () => {
 
 
   return (
-    <div className="page-container">
-      <div className="header-container">
-        <Header />
+    <div className="page-wrapper">
+      <div className="header-wrapper">
+        <header>
+          <Header />
+        </header>
       </div>
-      <div className="content-container">
-        <h1>ViewFlat</h1>
+      <div className="content-wrapper">
+        <main>
+          <h1>ViewFlat</h1>
+        </main>
       </div>
-      <div className="footer-container">
-        <Footer />
+      <div className="footer-wrapper">
+        <footer>
+          <Footer />
+        </footer>
       </div>
     </div>
   )
