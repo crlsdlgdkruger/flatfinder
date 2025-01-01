@@ -1,0 +1,29 @@
+header, main, footer{
+  width: 80%;
+  margin: 0 auto;
+}
+
+.header-wrapper{
+  border-bottom: 1px solid #d1d1d1;
+}
+
+.footer-wrapper{
+  background-color: #333;
+}
+
+.header-wrapper, .content-wrapper{
+  /* background-color: beige; */
+}
+
+.page-wrapper {
+  background-color: #f5f5f5;
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr auto;
+}
+
+@media screen and (max-width: 1110px) {
+  header, main, footer{
+    width: 100%;
+  }
+}

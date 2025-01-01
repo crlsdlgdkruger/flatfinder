@@ -82,9 +82,7 @@ export const Header = () => {
   return (
     <div className="header-container">
       <div className="menu-container">
-        <div className="options-container">
-          <Menubar model={items} className="menubar" start={start} />
-        </div>
+        <Menubar model={items} className="menubar" start={start} />
       </div>
     </div>
   )

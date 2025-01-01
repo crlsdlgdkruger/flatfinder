@@ -3,6 +3,7 @@ import UserContext from "../../context/UserContext";
 import { AuthService } from "../../services/AuthService";
 import { Header } from "../../components/header/Header";
 import { Footer } from "../../components/footer/Footer";
+import "../pages.css";
 
 export const MyProfile = () => {
 
@@ -14,7 +15,7 @@ export const MyProfile = () => {
 
 
   return (
-    <div>
+    <div className="page-container">
       <div className="header-container">
         <Header />
       </div>

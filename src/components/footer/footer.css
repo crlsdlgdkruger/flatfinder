@@ -1,13 +1,8 @@
 .footer-container {
   display: flex;
   justify-content: space-between;
-  background-color: #333;
   color: #fff;
   padding: 1rem;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
 }
 
 .social{
@@ -40,4 +35,12 @@
 
 .whatsapp-icon {
   color: #25D366;
+}
+
+@media screen and (max-width: 540px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
 }

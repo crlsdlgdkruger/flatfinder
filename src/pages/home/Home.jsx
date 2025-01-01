@@ -3,6 +3,7 @@ import UserContext from "../../context/UserContext";
 import { AuthService } from "../../services/AuthService";
 import { Header } from "../../components/header/Header";
 import { Footer } from "../../components/footer/Footer";
+import "../pages.css";
 
 export const Home = () => {
 
@@ -14,15 +15,21 @@ export const Home = () => {
 
 
   return (
-    <div>
-      <div className="header-container">
-        <Header />
+    <div className="page-wrapper">
+      <div className="header-wrapper">
+        <header>
+          <Header />
+        </header>
       </div>
-      <div className="content-container">
-        <h1>Home</h1>
+      <div className="content-wrapper">
+        <main>
+          <h1>Home</h1>
+        </main>
       </div>
-      <div className="footer-container">
-        <Footer />
+      <div className="footer-wrapper">
+        <footer>
+          <Footer />
+        </footer>
       </div>
     </div>
   )
