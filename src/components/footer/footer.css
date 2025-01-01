@@ -1,0 +1,43 @@
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  background-color: #333;
+  color: #fff;
+  padding: 1rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.social{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.social-icons {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-icons i {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.social-icons i:hover {
+  transform: scale(1.1);
+}
+
+.facebook-icon {
+  color: #1877F2;
+}
+
+.instagram-icon {
+  color: #E4405F;
+}
+
+.whatsapp-icon {
+  color: #25D366;
+}

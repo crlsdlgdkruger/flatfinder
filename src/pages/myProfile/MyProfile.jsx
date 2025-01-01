@@ -4,7 +4,7 @@ import { AuthService } from "../../services/AuthService";
 import { Header } from "../../components/header/Header";
 import { Footer } from "../../components/footer/Footer";
 
-export const Home = () => {
+export const MyProfile = () => {
 
   const { user, updateUser } = useContext(UserContext);
 
@@ -19,7 +19,7 @@ export const Home = () => {
         <Header />
       </div>
       <div className="content-container">
-        <h1>Home</h1>
+        <h1>MyProfile</h1>
       </div>
       <div className="footer-container">
         <Footer />
