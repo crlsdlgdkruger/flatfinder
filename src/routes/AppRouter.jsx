@@ -7,6 +7,7 @@ import { MyProfile } from "../pages/myProfile/MyProfile";
 import { NewFlat } from "../pages/newFlat/NewFlat";
 import { Favorites } from "../pages/favorites/Favorites";
 import { ViewFlat } from "../pages/viewFlat/ViewFlat";
+import { EditFlat } from "../pages/editFlat/EditFlat";
 
 const AppRouter = () => {
   return (
@@ -20,6 +21,7 @@ const AppRouter = () => {
         <Route path="/newFlat" element={<NewFlat />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/viewFlat" element={<ViewFlat />} />
+        <Route path="/editFlat" element={<EditFlat />} />
       </Routes>
     </UserContextProvider>
   );

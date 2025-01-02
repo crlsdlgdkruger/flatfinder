@@ -8,10 +8,10 @@ import { FlatForm } from "../../components/flatForm/FlatForm";
 import { Flat } from "../../models/Flat";
 import { Toast } from "primereact/toast";
 import "../pages.css";
-import "./newFlat.css";
+import "./editFlat.css";
 import { useNavigate } from "react-router-dom";
 
-export const NewFlat = () => {
+export const EditFlat = () => {
 
   const [flat, setFlat] = useState(new Flat());
   const { user, updateUser } = useContext(UserContext);
@@ -22,16 +22,20 @@ export const NewFlat = () => {
     // AuthService.isAuthenticated(user);
   }, []);
 
-  const createFlat = () => {
+  useEffect(() => {
+    console.log('user', user);
+  }, [user]);
+
+  const updateFlat = () => {
     const service = new FlatService();
-    const data = service.createFlat({ ...flat, userId: user[0].id });
+    const data = service.updateFlat({ ...flat, userId: user[0].id });
     if (data) {
-      toast.current.show({ severity: 'success', summary: 'Success', detail: 'Flat created', life: 2000 });
+      toast.current.show({ severity: 'info', summary: 'Info', detail: 'Flat updated', life: 2000 });
       setTimeout(() => {
         navigate("/home");
       }, 2000);
     } else {
-      toast.current.show({ severity: 'error', summary: 'Error', detail: 'Flat not created', life: 2000 });
+      toast.current.show({ severity: 'error', summary: 'Error', detail: 'Flat not updated', life: 2000 });
     }
   }
 
@@ -45,8 +49,8 @@ export const NewFlat = () => {
       <div className="content-wrapper">
         <Toast ref={toast} />
         <main>
-          <h1>New Flat</h1>
-          <FlatForm flat={flat} setFlat={setFlat} action={createFlat} buttonAction={"SAVE"} />
+          <h1>Edit Flat</h1>
+          <FlatForm flat={flat} setFlat={setFlat} action={updateFlat} buttonAction={"UPDATE"} />
         </main>
       </div>
       <div className="footer-wrapper">
