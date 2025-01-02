@@ -7,14 +7,14 @@ import { useEffect, useRef, useState } from 'react';
 import { User } from '../../models/User';
 import { UserService } from '../../services/UserService';
 import "./register.css"
-import { Messages } from 'primereact/messages';
+import { Toast } from 'primereact/toast';
 
 export const Register = () => {
 
   const [user, setUser] = useState(new User());
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const msgs = useRef([]);
+  const toast = useRef([]);
 
   const submitRegister = async (e) => {
     e.preventDefault();
@@ -22,18 +22,15 @@ export const Register = () => {
       const service = new UserService();
       const data = await service.register(user);
       if (data) {
-        addContentSuccessMessage();
-        redirectLogin();
+        toast.current.show({ severity: 'success', summary: 'Success', detail: 'User created successfully, please login', life: 3000 });
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 3000);
       } else {
-        addContentErrorMessage();
+        toast.current.show({ severity: 'error', summary: 'Error', detail: 'Email already exists', life: 3000 });
+
       }
     }
-  }
-
-  const redirectLogin = () => {
-    setTimeout(() => {
-      window.location.href = "/login";
-    }, 2000);
   }
 
   const validate = () => {
@@ -48,26 +45,12 @@ export const Register = () => {
     return Object.keys(errors).length === 0;
   }
 
-  const addContentErrorMessage = () => {
-    clearMessages();
-    msgs.current.show({ severity: 'error', summary: 'Error', detail: 'Email already exists', closable: true });
-  }
-
-  const addContentSuccessMessage = () => {
-    clearMessages();
-    msgs.current.show({ severity: 'success', summary: 'Success', detail: 'User created successfully, please login', closable: true });
-  }
-
-  const clearMessages = () => {
-    msgs.current.clear();
-  };
-
   return (
     <div>
       <div className='register-container'>
+        <Toast ref={toast} />
         <form className='' onSubmit={(e) => { submitRegister(e) }}>
           <h2>Sign Up</h2>
-
           {/* First name input */}
           <div>
             <label htmlFor="first-name">First Name</label>
@@ -117,7 +100,6 @@ export const Register = () => {
           <p>Already have an account? <a href='/login' className='redirect-link'>Sign In</a></p>
         </form>
       </div>
-      <Messages ref={msgs} />
     </div>
   )
 }

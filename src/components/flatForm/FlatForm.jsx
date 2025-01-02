@@ -2,16 +2,39 @@ import { Button } from "primereact/button"
 import { Calendar } from "primereact/calendar"
 import { InputText } from "primereact/inputtext"
 import { RadioButton } from "primereact/radiobutton"
+import { useState } from "react"
+// import { Flat } from "../../models/Flat";
 
-export const FlatForm = () => {
 
-  const [flat, setFlat] = useState(new Flat());
+export const FlatForm = ({ flat, setFlat, action, buttonAction }) => {
+
+  // const [flat, setFlat] = useState(new Flat());
   const [errors, setErrors] = useState({});
+
+  const submitFlat = (e) => {
+    e.preventDefault();
+    if (validate()) {
+      action();
+    }
+  }
+
+  const validate = () => {
+    const errors = {};
+    if (!flat.city) errors.city = "City is required";
+    if (!flat.streetName) errors.streetName = "Street name is required";
+    if (!flat.streetNumber) errors.streetNumber = "Street number is required";
+    if (!flat.areaSize) errors.areaSize = "Area size is required";
+    if (flat.hasAC === null || flat.hasAC === undefined) errors.hasAC = "Has AC is required";
+    if (!flat.yearBuilt) errors.yearBuilt = "Year built is required";
+    if (!flat.rentPrice) errors.rentPrice = "Rent price is required";
+    if (!flat.dateAvailable) errors.dateAvailable = "Date available is required";
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  }
 
   return (
     <div>
-      <form action="">
-        <h1>NewFlat</h1>
+      <form onSubmit={(e) => { submitFlat(e) }}>
         {/* City input */}
         <div>
           <label htmlFor="city-input">City</label>
@@ -61,17 +84,20 @@ export const FlatForm = () => {
             <label htmlFor="has-ac-yes">Has AC</label>
           </div>
           <div>
-            <RadioButton inputId="has-ac-yes" name="hasAC" value="Yes" onChange={(e) => { setFlat({ ...flat, hasAC: e.value }) }} checked={flat.hasAC === "Yes"} />
+            <RadioButton inputId="has-ac-yes" name="hasAC" value={true} onChange={(e) => { setFlat({ ...flat, hasAC: e.value }) }} checked={flat.hasAC === true} />
             <label htmlFor="has-ac-yes">Yes</label>
           </div>
           <div>
-            <RadioButton inputId="has-ac-no" name="hasAC" value="No" onChange={(e) => { setFlat({ ...flat, hasAC: e.value }) }} checked={flat.hasAC === "No"} />
+            <RadioButton inputId="has-ac-no" name="hasAC" value={false} onChange={(e) => { setFlat({ ...flat, hasAC: e.value }) }} checked={flat.hasAC === false} />
             <label htmlFor="has-ac-no">No</label>
+          </div>
+          <div>
+            {errors.hasAC && <small className="p-error">{errors.hasAC}</small>}
           </div>
         </div>
         {/* Submit button */}
         <div>
-          <Button label="Save" type="submit" />
+          <Button label={buttonAction} type="submit" />
         </div>
       </form>
     </div>

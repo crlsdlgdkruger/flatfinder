@@ -1,12 +1,13 @@
 import { db } from "../config/firebase";
 import { collection, getDocs, addDoc, query, where } from "firebase/firestore";
+import { Utils } from "./Utils";
 export class UserService {
   constructor() {
     this.usersCollectionRef = collection(db, "users");
   }
   async getUsers() {
     const data = await getDocs(this.usersCollectionRef);
-    return getData(data);
+    return Utils.getData(data);
   }
 
   async login(email, password) {
@@ -16,7 +17,7 @@ export class UserService {
       where("password", "==", password)
     );
     const data = await getDocs(q);
-    return getData(data);
+    return Utils.getData(data);
   }
 
   async register(user) {
@@ -33,8 +34,3 @@ export class UserService {
   }
 }
 
-const getData = (data) => {
-  return data.docs.map((doc) => {
-    return { ...doc.data(), id: doc.id };
-  })
-}
