@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { FlatService } from '../../services/FlatService';
 import { Column } from 'primereact/column';
 import "./flatList.css";
+import { Button } from 'primereact/button';
 
 export const FlatList = () => {
 
@@ -24,6 +25,37 @@ export const FlatList = () => {
     console.log('flats', flats);
   }, [flats]);
 
+  const handleView = (flat) => {
+    console.log("Editar flat:", flat);
+  };
+
+  const handleFavorite = (flat) => {
+    console.log("Favorite flat:", flat);
+  };
+
+
+  const actionBodyTemplate = (rowData) => {
+    return (
+      <div className='action-buttons'>
+        <Button
+          icon="pi pi-heart"
+          rounded
+          severity='danger'
+          outlined
+          tooltip="Add to favorites" tooltipOptions={{ position: 'top', mouseTrackTop: 15, showDelay: 500 }}
+          onClick={() => handleFavorite(rowData)}
+        />
+        <Button
+          icon="pi pi-eye"
+          rounded
+          severity='info'
+          tooltip="View Flat" tooltipOptions={{ position: 'top', mouseTrackTop: 15, showDelay: 500 }}
+          onClick={() => handleView(rowData)}
+        />
+      </div>
+    );
+  };
+
   return (
     <div className="flat-list-container">
       <h4>Flat List</h4>
@@ -38,6 +70,12 @@ export const FlatList = () => {
           <Column field="rentPrice" header="Rent Price" sortable />
           <Column field="dateAvailable" header="Date Available" />
           <Column field="hasAC" header="Has AC" />
+          {/* Columna de opciones */}
+          <Column
+            body={actionBodyTemplate}
+            header="Options"
+            style={{ textAlign: 'center', width: '150px' }}
+          />
         </DataTable>
       </div>
     </div>
