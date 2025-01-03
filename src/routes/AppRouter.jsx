@@ -21,7 +21,7 @@ const AppRouter = () => {
         <Route path="/newFlat" element={<NewFlat />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/viewFlat" element={<ViewFlat />} />
-        <Route path="/editFlat" element={<EditFlat />} />
+        <Route path="/editflat" element={<EditFlat />} />
       </Routes>
     </UserContextProvider>
   );

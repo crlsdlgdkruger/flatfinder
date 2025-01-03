@@ -1,0 +1,21 @@
+.flat-list-container {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.flat-list {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.p-datatable {
+  max-width: 100vw;
+}
+
+@media (max-width: 720px) {
+  .flat-list {
+    min-width: 400px;
+    /* Asegura un mínimo para la tabla */
+  }
+}

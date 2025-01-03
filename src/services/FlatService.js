@@ -9,7 +9,13 @@ export class FlatService {
 
   async getFlats() {
     const data = await getDocs(this.usersCollectionRef);
-    return Utils.getData(data);
+    return data.docs.map((doc) => {
+      const flat = doc.data();
+      if (flat.dateAvailable && flat.dateAvailable.seconds) {
+        flat.dateAvailable = new Date(flat.dateAvailable.seconds * 1000).toLocaleDateString();
+      }
+      return flat;
+    });
   }
 
   async createFlat(flat) {

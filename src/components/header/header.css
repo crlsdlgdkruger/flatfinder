@@ -29,6 +29,10 @@
   padding: 0.5rem 0;
 }
 
+.p-menubar .p-menuitem>.p-menuitem-content .p-menuitem-link {
+  padding: 0.75rem;
+}
+
 .logo-container, .avatar-container{
   cursor: pointer;
   background-color: transparent;

@@ -14,9 +14,10 @@ code {
 
 
 body, html {
-  margin: 0;
+  /* margin: 0;
   padding: 0;
   height: 100vh;
   width: 100vw;
-  overflow-x: hidden;
+  max-width: 100%;
+  overflow-x: hidden; */
 }

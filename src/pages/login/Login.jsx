@@ -1,13 +1,13 @@
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
-import { Messages } from 'primereact/messages';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { UserService } from '../../services/UserService';
 import UserContext from '../../context/UserContext';
 
 import "./login.css"
 import { useNavigate } from 'react-router-dom';
+import { Toast } from 'primereact/toast';
 
 export const Login = () => {
 
@@ -16,15 +16,15 @@ export const Login = () => {
   const { user, updateUser } = useContext(UserContext);
   const [submitted, setSubmitted] = useState(false);
   const navigate = useNavigate();
-  const msgs = useRef([]);
+  const toast = useRef([]);
 
   const addContentErrorMessage = () => {
     clearMessages();
-    msgs.current.show({ severity: 'error', summary: 'Error', detail: 'Invalid email or password', closable: true });
+    toast.current.show({ severity: 'error', summary: 'Error', detail: 'Invalid email or password', closable: true });
   }
 
   const clearMessages = () => {
-    msgs.current.clear();
+    toast.current.clear();
   };
 
   const submitLogin = (e) => {
@@ -55,6 +55,7 @@ export const Login = () => {
   return (
     <div>
       <div className='login-container'>
+        <Toast ref={toast} />
         <form className='' onSubmit={e => submitLogin(e)}>
           <h2>Sign In</h2>
 
@@ -77,7 +78,6 @@ export const Login = () => {
           <p>Don't have an account yet? <a href='/register' className='redirect-link'>Sign Up</a></p>
         </form>
       </div>
-      <Messages ref={msgs} />
     </div>
   )
 }

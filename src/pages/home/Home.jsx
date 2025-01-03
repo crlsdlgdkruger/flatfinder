@@ -4,6 +4,7 @@ import { AuthService } from "../../services/AuthService";
 import { Header } from "../../components/header/Header";
 import { Footer } from "../../components/footer/Footer";
 import "../pages.css";
+import { FlatList } from "../../components/flatList/FlatList";
 
 export const Home = () => {
 
@@ -23,7 +24,8 @@ export const Home = () => {
       </div>
       <div className="content-wrapper">
         <main>
-          <h1>Home</h1>
+          <h3>Home</h3>
+          <FlatList />
         </main>
       </div>
       <div className="footer-wrapper">

@@ -22,10 +22,6 @@ export const EditFlat = () => {
     // AuthService.isAuthenticated(user);
   }, []);
 
-  useEffect(() => {
-    console.log('user', user);
-  }, [user]);
-
   const updateFlat = () => {
     const service = new FlatService();
     const data = service.updateFlat({ ...flat, userId: user[0].id });
