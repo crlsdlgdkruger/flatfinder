@@ -1,0 +1,23 @@
+.card-footer{
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.flat-card-container {
+  position: relative;
+}
+
+.close-button-container {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 100;
+}
+
+.close-button-container button{
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 100;
+}

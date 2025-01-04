@@ -21,16 +21,6 @@ export const Header = () => {
       command: () => navigate("/newflat")
     },
     {
-      label: 'View Flat',
-      icon: 'pi pi-fw pi-eye',
-      command: () => navigate("/viewflat")
-    },
-    {
-      label: 'Edit Flat',
-      icon: 'pi pi-fw pi-pencil',
-      command: () => navigate("/editflat")
-    },
-    {
       label: 'Favorites',
       icon: 'pi pi-fw pi-heart',
       command: () => navigate("/favorites")

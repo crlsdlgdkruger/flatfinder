@@ -2,12 +2,14 @@ import { DataTable } from 'primereact/datatable';
 import { useEffect, useState } from 'react';
 import { FlatService } from '../../services/FlatService';
 import { Column } from 'primereact/column';
-import "./flatList.css";
 import { Button } from 'primereact/button';
+import { useNavigate } from 'react-router-dom';
+import "./flatList.css";
 
 export const FlatList = () => {
 
   const [flats, setFlats] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchFlats = async () => {
@@ -26,7 +28,7 @@ export const FlatList = () => {
   }, [flats]);
 
   const handleView = (flat) => {
-    console.log("Editar flat:", flat);
+    navigate("/viewflat", { state: { flat } });
   };
 
   const handleFavorite = (flat) => {
