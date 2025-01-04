@@ -1,7 +1,7 @@
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
-import "./flatCard.css"
 import { useNavigate } from "react-router-dom";
+import "./flatCard.css"
 
 export const FlatCard = ({ flat, userId }) => {
 
@@ -19,7 +19,8 @@ export const FlatCard = ({ flat, userId }) => {
   const cardFooter = (
     <div className="card-footer">
       <Button icon="pi pi-heart" severity="danger" rounded outlined tooltip="Add to favorites" tooltipOptions={{ position: 'top', mouseTrackTop: 15, showDelay: 500 }} />
-      <Button icon="pi pi-pencil" severity="success" rounded tooltip="Edit Flat" tooltipOptions={{ position: 'top', mouseTrackTop: 15, showDelay: 500 }} />
+      {flat.userId === userId && <Button icon="pi pi-pencil" severity="success" rounded tooltip="Edit Flat" tooltipOptions={{ position: 'top', mouseTrackTop: 15, showDelay: 500 }} onClick={() => { navigate("/editflat", { state: { flat } }) }} />}
+
     </div>
   )
   return (

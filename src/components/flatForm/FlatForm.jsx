@@ -74,7 +74,7 @@ export const FlatForm = ({ flat, setFlat, action, buttonAction }) => {
         {/* Date available input */}
         <div>
           <label htmlFor="date-available-input">Date Available</label>
-          <Calendar id="date-available-input" value={flat.dateAvailable} onChange={(e) => { setFlat({ ...flat, dateAvailable: e.target.value }) }} dateFormat="dd/mm/yy" />
+          <Calendar id="date-available-input" value={new Date(flat.dateAvailable)} onChange={(e) => { setFlat({ ...flat, dateAvailable: e.target.value }) }} dateFormat="mm/dd/yy" />
           {errors.dateAvailable && <small className="p-error">{errors.dateAvailable}</small>}
         </div>
 

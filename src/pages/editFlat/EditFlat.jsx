@@ -9,7 +9,7 @@ import { Flat } from "../../models/Flat";
 import { Toast } from "primereact/toast";
 import "../pages.css";
 import "./editFlat.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const EditFlat = () => {
 
@@ -17,14 +17,26 @@ export const EditFlat = () => {
   const { user, updateUser } = useContext(UserContext);
   const toast = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
+  const flatToEdit = location.state.flat;
 
   useEffect(() => {
     // AuthService.isAuthenticated(user);
   }, []);
 
+  useEffect(() => {
+    const formattedFlat = {
+      ...flatToEdit,
+      dateAvailable: flatToEdit.dateAvailable ? new Date(flatToEdit.dateAvailable) : null
+    };
+    setFlat(formattedFlat);
+  }, [flatToEdit]);
+
+  useEffect(() => { console.log('Flat to edit', flat); }, [flat]);
+
   const updateFlat = () => {
     const service = new FlatService();
-    const data = service.updateFlat({ ...flat, userId: user[0].id });
+    const data = service.updateFlat(flat);
     if (data) {
       toast.current.show({ severity: 'info', summary: 'Info', detail: 'Flat updated', life: 2000 });
       setTimeout(() => {

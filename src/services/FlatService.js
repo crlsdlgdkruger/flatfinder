@@ -1,5 +1,5 @@
 import { db } from "../config/firebase";
-import { collection, getDocs, addDoc, query, where } from "firebase/firestore";
+import { collection, getDocs, addDoc, query, where, doc, updateDoc } from "firebase/firestore";
 import { Utils } from "./Utils";
 
 export class FlatService {
@@ -12,26 +12,26 @@ export class FlatService {
     return data.docs.map((doc) => {
       const flat = doc.data();
       if (flat.dateAvailable && flat.dateAvailable.seconds) {
-        flat.dateAvailable = new Date(flat.dateAvailable.seconds * 1000).toLocaleDateString();
+        const date = new Date(flat.dateAvailable.seconds * 1000);
+        flat.dateAvailable = date.toISOString().split("T")[0];
       }
-      return flat;
+      return { ...flat, id: doc.id };
     });
   }
 
   async createFlat(flat) {
+    if (flat.dateAvailable) {
+      flat.dateAvailable = new Date(flat.dateAvailable); // Convierte a objeto Date
+    }
     return await addDoc(this.usersCollectionRef, flat);
   }
 
   async updateFlat(flat) {
-    const q = query(
-      this.usersCollectionRef,
-      where("id", "==", flat.id)
-    );
-    const data = await getDocs(q);
-    if (data.docs.length === 1) {
-      return await addDoc(this.usersCollectionRef, flat);
-    } else {
-      return null;
+    console.log('updateFlat', flat);
+    if (flat.dateAvailable) {
+      flat.dateAvailable = new Date(flat.dateAvailable); // Convierte a objeto Date
     }
+    const docRef = doc(db, "flats", flat.id);
+    return await updateDoc(docRef, flat);
   }
 }
