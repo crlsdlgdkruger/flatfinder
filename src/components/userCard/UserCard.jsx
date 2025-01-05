@@ -13,10 +13,6 @@ export const UserCard = () => {
 
   const userAge = Utils.calculateAge(user[0].birthDate);
 
-  // useEffect(() => {
-  //   console.log('USER', user, 'userAge', userAge);
-  // }, [user]);
-
   const cardHeader = (
     <div>
       <img alt="user_cover_image" src="/images/profile_background.jpg" className="user-card-cover" />

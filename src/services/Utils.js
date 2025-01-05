@@ -6,7 +6,6 @@ export class Utils {
   }
 
   static calculateAge = (date) => {
-    console.log('calculateAge', date);
     const today = new Date();
     let birthDate;
     if (date.seconds) {
@@ -14,7 +13,6 @@ export class Utils {
     } else {
       birthDate = new Date(date);
     }
-    console.log('birthDate', birthDate);
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
