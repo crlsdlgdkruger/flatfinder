@@ -136,6 +136,30 @@ export const FlatList = () => {
     return matchesCity && matchesRentPrice && matchesArea;
   });
 
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
+  };
+
+  const rentPriceBodyTemplate = (rowData) => {
+    return formatCurrency(rowData.rentPrice);
+  };
+
+  const formatArea = (value) => {
+    return `${value} m²`;
+  };
+
+  const areaBodyTemplate = (rowData) => {
+    return formatArea(rowData.areaSize);
+  };
+
+  const formatAC = (value) => {
+    return value ? 'Yes' : 'No';
+  };
+
+  const hasACBodyTemplate = (rowData) => {
+    return formatAC(rowData.hasAC);
+  };
+
   return (
     <div className="flat-list-container">
       <h4>Flat List</h4>
@@ -144,11 +168,11 @@ export const FlatList = () => {
           <Column field="city" header="City" sortable filter filterElement={cityFilterElement} />
           <Column field="streetName" header="Street Name" />
           <Column field="streetNumber" header="Street Number" />
-          <Column field="areaSize" header="Area Size" sortable filter filterElement={areaFilterElement} />
+          <Column field="areaSize" header="Area Size" sortable filter filterElement={areaFilterElement} body={areaBodyTemplate} />
           <Column field="yearBuilt" header="Year Built" />
-          <Column field="rentPrice" header="Rent Price" sortable filter filterElement={rentPriceFilterElement} />
+          <Column field="rentPrice" header="Rent Price" sortable filter filterElement={rentPriceFilterElement} body={rentPriceBodyTemplate} />
           <Column field="dateAvailable" header="Date Available" />
-          <Column field="hasAC" header="Has AC" />
+          <Column field="hasAC" header="Has AC" body={hasACBodyTemplate} />
           <Column
             body={actionBodyTemplate}
             header="Options"
