@@ -6,11 +6,16 @@ import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 import "./flatList.css";
 import { InputText } from 'primereact/inputtext';
+import { InputNumber } from 'primereact/inputnumber';
 
 export const FlatList = () => {
 
   const [flats, setFlats] = useState([]);
   const [cityFilter, setCityFilter] = useState("");
+  const [minRentPriceFilter, setMinRentPriceFilter] = useState(0);
+  const [maxRentPriceFilter, setMaxRentPriceFilter] = useState(0);
+  const [minAreaFilter, setMinAreaFilter] = useState(0);
+  const [maxAreaFilter, setMaxAreaFilter] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -63,7 +68,7 @@ export const FlatList = () => {
       <span className="p-input-icon-right">
         <InputText
           value={cityFilter}
-          onChange={(e) => setCityFilter(e.target.value)} // Actualiza el filtro
+          onChange={(e) => setCityFilter(e.target.value)}
           placeholder="Search by city"
         />
         <i className="pi pi-search search-icon" />
@@ -71,19 +76,77 @@ export const FlatList = () => {
     );
   };
 
-  const flatsFiltered = cityFilter ? flats.filter(flat => flat.city.toLowerCase().includes(cityFilter.toLowerCase())) : flats;
+  const rentPriceFilterElement = () => {
+    return (
+      <div className="p-inputgroup">
+        <span className="p-inputgroup-addon">Min</span>
+        <InputNumber
+          value={minRentPriceFilter}
+          onValueChange={(e) => setMinRentPriceFilter(e.value)}
+          placeholder="Min price"
+          mode="currency"
+          currency="USD"
+          locale="en-US"
+        />
+        <span className="p-inputgroup-addon">Max</span>
+        <InputNumber
+          value={maxRentPriceFilter}
+          onValueChange={(e) => setMaxRentPriceFilter(e.value)}
+          placeholder="Max price"
+          mode="currency"
+          currency="USD"
+          locale="en-US"
+        />
+      </div>
+    );
+  };
+
+  const areaFilterElement = () => {
+    return (
+      <div className="p-inputgroup">
+        <span className="p-inputgroup-addon">Min</span>
+        <InputNumber
+          value={minAreaFilter}
+          onValueChange={(e) => setMinAreaFilter(e.value)}
+          placeholder="Min Area"
+        />
+        <span className="p-inputgroup-addon">Max</span>
+        <InputNumber
+          value={maxAreaFilter}
+          onValueChange={(e) => setMaxAreaFilter(e.value)}
+          placeholder="Max Area"
+        />
+      </div>
+    );
+  };
+
+  const filteredFlats = flats.filter((flat) => {
+    const matchesCity = cityFilter
+      ? flat.city?.toLowerCase().includes(cityFilter.toLowerCase())
+      : true;
+
+    const matchesRentPrice =
+      (!minRentPriceFilter || flat.rentPrice >= minRentPriceFilter) &&
+      (!maxRentPriceFilter || flat.rentPrice <= maxRentPriceFilter);
+
+    const matchesArea =
+      (!minAreaFilter || flat.areaSize >= minAreaFilter) &&
+      (!maxAreaFilter || flat.areaSize <= maxAreaFilter);
+
+    return matchesCity && matchesRentPrice && matchesArea;
+  });
 
   return (
     <div className="flat-list-container">
       <h4>Flat List</h4>
       <div className="flat-list">
-        <DataTable value={flatsFiltered} scrollable scrollDirection="horizontal">
+        <DataTable value={filteredFlats} scrollable scrollDirection="horizontal">
           <Column field="city" header="City" sortable filter filterElement={cityFilterElement} />
           <Column field="streetName" header="Street Name" />
           <Column field="streetNumber" header="Street Number" />
-          <Column field="areaSize" header="Area Size" sortable />
+          <Column field="areaSize" header="Area Size" sortable filter filterElement={areaFilterElement} />
           <Column field="yearBuilt" header="Year Built" />
-          <Column field="rentPrice" header="Rent Price" sortable />
+          <Column field="rentPrice" header="Rent Price" sortable filter filterElement={rentPriceFilterElement} />
           <Column field="dateAvailable" header="Date Available" />
           <Column field="hasAC" header="Has AC" />
           <Column
