@@ -5,10 +5,12 @@ import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 import "./flatList.css";
+import { InputText } from 'primereact/inputtext';
 
 export const FlatList = () => {
 
   const [flats, setFlats] = useState([]);
+  const [cityFilter, setCityFilter] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,8 +22,6 @@ export const FlatList = () => {
 
     fetchFlats();
   }, []);
-
-
 
   useEffect(() => {
     console.log('flats', flats);
@@ -58,13 +58,27 @@ export const FlatList = () => {
     );
   };
 
+  const cityFilterElement = () => {
+    return (
+      <span className="p-input-icon-right">
+        <InputText
+          value={cityFilter}
+          onChange={(e) => setCityFilter(e.target.value)} // Actualiza el filtro
+          placeholder="Search by city"
+        />
+        <i className="pi pi-search search-icon" />
+      </span>
+    );
+  };
+
+  const flatsFiltered = cityFilter ? flats.filter(flat => flat.city.toLowerCase().includes(cityFilter.toLowerCase())) : flats;
+
   return (
     <div className="flat-list-container">
       <h4>Flat List</h4>
-      {/* hacer un scrooll horizontal con primereact para pantallas pequenas */}
       <div className="flat-list">
-        <DataTable value={flats} scrollable scrollDirection="horizontal">
-          <Column field="city" header="City" sortable />
+        <DataTable value={flatsFiltered} scrollable scrollDirection="horizontal">
+          <Column field="city" header="City" sortable filter filterElement={cityFilterElement} />
           <Column field="streetName" header="Street Name" />
           <Column field="streetNumber" header="Street Number" />
           <Column field="areaSize" header="Area Size" sortable />
@@ -72,7 +86,6 @@ export const FlatList = () => {
           <Column field="rentPrice" header="Rent Price" sortable />
           <Column field="dateAvailable" header="Date Available" />
           <Column field="hasAC" header="Has AC" />
-          {/* Columna de opciones */}
           <Column
             body={actionBodyTemplate}
             header="Options"
