@@ -35,6 +35,11 @@ export const Header = () => {
           command: () => navigate("/myProfile")
         },
         {
+          label: 'Update Password',
+          icon: 'pi pi-fw pi-key',
+          command: () => navigate("/updatePassword")
+        },
+        {
           label: 'Logout',
           icon: 'pi pi-fw pi-power-off',
           command: () => window.location.href = "/login"

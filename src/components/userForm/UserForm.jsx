@@ -4,14 +4,6 @@ import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { useEffect, useState } from "react";
 
-// const timestampToDate = (timestamp) => {
-//   return timestamp ? new Date(timestamp.seconds * 1000) : null;
-// };
-
-// const dateToTimestamp = (date) => {
-//   return date ? { seconds: Math.floor(date.getTime() / 1000) } : null;
-// };
-
 export const UserForm = ({ user = {}, setUser, action, buttonAction }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -41,10 +33,6 @@ export const UserForm = ({ user = {}, setUser, action, buttonAction }) => {
     return Object.keys(errors).length === 0;
   }
 
-  // const handleDateChange = (e) => {
-  //   const selectedDate = e.value ? dateToTimestamp(e.value) : null;
-  //   setUser({ ...user, birthDate: selectedDate });
-  // };
 
   return (
     <div className="user-form-container">
