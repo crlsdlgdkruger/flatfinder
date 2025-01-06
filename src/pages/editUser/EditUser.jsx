@@ -21,10 +21,11 @@ export const EditUser = () => {
     // AuthService.isAuthenticated(user);
   }, []);
 
-  const editUser = (userToEdit) => {
+  const editUser = async (userToEdit) => {
     const service = new UserService();
     const data = service.editUser({ ...userToEdit, id: user[0].id });
-    // updateUser(user);
+    updateUser(await service.getUser(userToEdit.email));
+
     if (data) {
       toast.current.show({ severity: 'info', summary: 'Info', detail: 'User updated', life: 2000 });
       setTimeout(() => {

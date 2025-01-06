@@ -20,6 +20,15 @@ export class UserService {
     return Utils.getData(data);
   }
 
+  async getUser(email) {
+    const q = query(
+      this.usersCollectionRef,
+      where("email", "==", email),
+    );
+    const data = await getDocs(q);
+    return Utils.getData(data);
+  }
+
   async register(user) {
     console.log('REGISTER', user);
     const q = query(
