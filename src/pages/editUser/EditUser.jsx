@@ -36,6 +36,10 @@ export const EditUser = () => {
     }
   }
 
+  const formatedUser = (user) => {
+    return { ...user, birthDate: new Date(user.birthDate.toDate()) };
+  }
+
   return (
     <div className="page-wrapper">
       <div className="header-wrapper">
@@ -47,7 +51,7 @@ export const EditUser = () => {
         <Toast ref={toast} />
         <main>
           <h1>Edit User</h1>
-          <UserForm user={user[0]} setUser={updateUser} action={editUser} buttonAction="Update" />
+          <UserForm user={formatedUser(user[0])} setUser={updateUser} action={editUser} buttonAction="Update" />
         </main>
       </div>
       <div className="footer-wrapper">
