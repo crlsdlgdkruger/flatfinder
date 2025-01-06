@@ -1,5 +1,5 @@
 import { db } from "../config/firebase";
-import { collection, getDocs, addDoc, query, where } from "firebase/firestore";
+import { collection, getDocs, addDoc, query, where, updateDoc, doc } from "firebase/firestore";
 import { Utils } from "./Utils";
 export class UserService {
   constructor() {
@@ -21,6 +21,7 @@ export class UserService {
   }
 
   async register(user) {
+    console.log('REGISTER', user);
     const q = query(
       this.usersCollectionRef,
       where("email", "==", user.email)
@@ -31,6 +32,14 @@ export class UserService {
     } else {
       return null;
     }
+  }
+
+  async editUser(user) {
+    if (user.birthDate) {
+      user.birthDate = new Date(user.birthDate); // Convierte a objeto Date
+    }
+    const docRef = doc(db, "users", user.id);
+    return await updateDoc(docRef, user);
   }
 }
 
