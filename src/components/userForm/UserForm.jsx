@@ -71,25 +71,35 @@ export const UserForm = ({ user = {}, setUser, action, buttonAction }) => {
         </div>
 
         {/* email input */}
-        <div>
-          <label htmlFor="email">Email</label>
-          <InputText id="email" value={userToEdit.email} onChange={(e) => { setUserToEdit({ ...userToEdit, email: e.target.value }) }} type='email' />
-          {errors.email && <small className="p-error">{errors.email}</small>}
-        </div>
+        {buttonAction === "Register" &&
+          <div>
+            <label htmlFor="email">Email</label>
+            <InputText id="email" value={userToEdit.email} onChange={(e) => { setUserToEdit({ ...userToEdit, email: e.target.value }) }} type='email' />
+            {errors.email && <small className="p-error">{errors.email}</small>}
+          </div>}
+
+        {buttonAction === "Update" &&
+          <div>
+            <label htmlFor="email">Email</label>
+            <InputText id="email" disabled value={userToEdit.email} onChange={(e) => { setUserToEdit({ ...userToEdit, email: e.target.value }) }} type='email' />
+            {errors.email && <small className="p-error">{errors.email}</small>}
+          </div>}
 
         {/* password input */}
-        <div>
-          <label htmlFor="password">Password</label>
-          <Password id="password" value={userToEdit.password} onChange={(e) => { setUserToEdit({ ...userToEdit, password: e.target.value }) }} type='password' toggleMask />
-          {errors.password && <small className="p-error">{errors.password}</small>}
-        </div>
+        {buttonAction === "Register" &&
+          <div>
+            <label htmlFor="password">Password</label>
+            <Password id="password" value={userToEdit.password} onChange={(e) => { setUserToEdit({ ...userToEdit, password: e.target.value }) }} type='password' toggleMask />
+            {errors.password && <small className="p-error">{errors.password}</small>}
+          </div>}
 
         {/* confirm password input */}
-        <div>
-          <label htmlFor="confirm-password">Confirm Password</label>
-          <Password id="confirm-password" value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value) }} type='password' toggleMask />
-          {errors.confirmPassword && <small className="p-error">{errors.confirmPassword}</small>}
-        </div>
+        {buttonAction === "Register" &&
+          <div>
+            <label htmlFor="confirm-password">Confirm Password</label>
+            <Password id="confirm-password" value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value) }} type='password' toggleMask />
+            {errors.confirmPassword && <small className="p-error">{errors.confirmPassword}</small>}
+          </div>}
 
         {/* submit button  */}
         <Button icon="pi pi-user-plus" label={buttonAction} iconPos="right" type='submit' />
