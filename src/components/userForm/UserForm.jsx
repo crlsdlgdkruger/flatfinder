@@ -17,8 +17,8 @@ export const UserForm = ({ user = {}, setUser, action, buttonAction }) => {
   }
 
   useEffect(() => {
-    console.log('User to edit', userToEdit);
-  }, [userToEdit]);
+    console.log('User to edit', userToEdit, 'Errors', errors);
+  }, [userToEdit, errors]);
 
 
   const validate = () => {
@@ -28,7 +28,7 @@ export const UserForm = ({ user = {}, setUser, action, buttonAction }) => {
     if (!userToEdit.birthDate) errors.birthDate = "Birth date is required";
     if (!userToEdit.email) errors.email = "Email is required";
     if (!userToEdit.password || userToEdit.password.length < 6) errors.password = "Password must be at least 6 characters";
-    if (userToEdit.password !== confirmPassword) errors.confirmPassword = "Passwords do not match";
+    if ((userToEdit.password !== confirmPassword) && buttonAction === "Register") errors.confirmPassword = "Passwords do not match";
     setErrors(errors);
     return Object.keys(errors).length === 0;
   }
@@ -59,17 +59,17 @@ export const UserForm = ({ user = {}, setUser, action, buttonAction }) => {
         </div>
 
         {/* email input */}
-        {buttonAction === "Register" &&
-          <div>
-            <label htmlFor="email">Email</label>
-            <InputText id="email" value={userToEdit.email} onChange={(e) => { setUserToEdit({ ...userToEdit, email: e.target.value }) }} type='email' />
-            {errors.email && <small className="p-error">{errors.email}</small>}
-          </div>}
-
         {buttonAction === "Update" &&
           <div>
             <label htmlFor="email">Email</label>
             <InputText id="email" disabled value={userToEdit.email} onChange={(e) => { setUserToEdit({ ...userToEdit, email: e.target.value }) }} type='email' />
+            {errors.email && <small className="p-error">{errors.email}</small>}
+          </div>}
+
+        {buttonAction === "Register" &&
+          <div>
+            <label htmlFor="email">Email</label>
+            <InputText id="email" value={userToEdit.email} onChange={(e) => { setUserToEdit({ ...userToEdit, email: e.target.value }) }} type='email' />
             {errors.email && <small className="p-error">{errors.email}</small>}
           </div>}
 
@@ -91,7 +91,6 @@ export const UserForm = ({ user = {}, setUser, action, buttonAction }) => {
 
         {/* submit button  */}
         <Button icon="pi pi-user-plus" label={buttonAction} iconPos="right" type='submit' />
-
       </form>
     </div>
   )
