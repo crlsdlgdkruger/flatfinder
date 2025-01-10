@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import UserContext from "../../context/UserContext";
 import { AuthService } from "../../services/AuthService";
 import { Header } from "../../components/header/Header";
@@ -9,22 +9,30 @@ import "./editUser.css";
 import { useNavigate } from "react-router-dom";
 import { UserService } from "../../services/UserService";
 import { UserForm } from "../../components/userForm/UserForm";
+import { User } from "../../models/User";
+import { LocalStorageService } from "../../services/LocalStoraeService";
 
 export const EditUser = () => {
 
   // const [flat, setFlat] = useState(new Flat());
-  const { user, updateUser } = useContext(UserContext);
+  // const { user, updateUser } = useContext(UserContext);
+  const [user, setUser] = useState(new User());
   const toast = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // AuthService.isAuthenticated(user);
+    const localStorageService = new LocalStorageService();
+    if (!localStorageService.isAuthenticated()) {
+      window.location.href = "/login";
+    }
   }, []);
 
   const editUser = async (userToEdit) => {
     const service = new UserService();
     const data = service.editUser({ ...userToEdit, id: user[0].id });
-    updateUser(await service.getUser(userToEdit.email));
+    setUser(await service.getUser(userToEdit.email));
+    const localStorageService = new LocalStorageService();
+    localStorageService.addLoggedUser(user);
 
     if (data) {
       toast.current.show({ severity: 'info', summary: 'Info', detail: 'User updated', life: 2000 });
@@ -51,7 +59,7 @@ export const EditUser = () => {
         <Toast ref={toast} />
         <main>
           <h1>Edit User</h1>
-          <UserForm user={formatedUser(user[0])} setUser={updateUser} action={editUser} buttonAction="Update" />
+          <UserForm user={formatedUser(user[0])} setUser={setUser} action={editUser} buttonAction="Update" />
         </main>
       </div>
       <div className="footer-wrapper">

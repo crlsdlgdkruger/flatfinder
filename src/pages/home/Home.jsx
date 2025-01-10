@@ -1,17 +1,25 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import UserContext from "../../context/UserContext";
 import { AuthService } from "../../services/AuthService";
 import { Header } from "../../components/header/Header";
 import { Footer } from "../../components/footer/Footer";
 import "../pages.css";
 import { FlatList } from "../../components/flatList/FlatList";
+import { LocalStorageService } from "../../services/LocalStoraeService";
+import { User } from "../../models/User";
 
 export const Home = () => {
 
-  const { user, updateUser } = useContext(UserContext);
+  // const { user, updateUser } = useContext(UserContext);
+  const [user, setUser] = useState(new User());
 
   useEffect(() => {
-    // AuthService.isAuthenticated(user);
+    const localStorageService = new LocalStorageService();
+    if (!localStorageService.isAuthenticated()) {
+      window.location.href = "/login";
+    } else {
+      setUser(localStorageService.getLoggedUser());
+    }
   }, []);
 
 

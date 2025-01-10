@@ -5,15 +5,17 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { UserService } from '../../services/UserService';
 import UserContext from '../../context/UserContext';
 
-import "./login.css"
 import { useNavigate } from 'react-router-dom';
 import { Toast } from 'primereact/toast';
+import { LocalStorageService } from '../../services/LocalStoraeService';
+import "./login.css"
 
 export const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { user, updateUser } = useContext(UserContext);
+  // const { user, updateUser } = useContext(UserContext);
+  const [user, setUser] = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const navigate = useNavigate();
   const toast = useRef([]);
@@ -40,14 +42,14 @@ export const Login = () => {
     }
   }, [user]);
 
-  useEffect(() => {
-
-  }, [user]);
 
   const login = async () => {
     const service = new UserService();
     const us = await service.login(email, password);
-    updateUser(us);
+    // updateUser(us);
+    const localStorageService = new LocalStorageService();
+    localStorageService.addLoggedUser(us);
+    setUser(us);
     setSubmitted(true);
   }
 

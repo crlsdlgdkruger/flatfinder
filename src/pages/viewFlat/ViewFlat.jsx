@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import UserContext from "../../context/UserContext";
 import { AuthService } from "../../services/AuthService";
 import { Header } from "../../components/header/Header";
@@ -7,15 +7,21 @@ import { useLocation } from "react-router-dom";
 import { FlatCard } from "../../components/flatCard/FlatCard";
 import "../pages.css";
 import "./viewFlat.css";
+import { User } from "../../models/User";
+import { LocalStorageService } from "../../services/LocalStoraeService";
 
 export const ViewFlat = () => {
 
-  const { user, updateUser } = useContext(UserContext);
+  // const { user, updateUser } = useContext(UserContext);
+  const [user, setUser] = useState(new User());
   const location = useLocation();
   const flat = location.state.flat;
 
   useEffect(() => {
-    // AuthService.isAuthenticated(user);
+    const localStorageService = new LocalStorageService();
+    if (!localStorageService.isAuthenticated()) {
+      window.location.href = "/login";
+    }
   }, []);
 
 

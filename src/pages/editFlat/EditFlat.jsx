@@ -10,18 +10,24 @@ import { Toast } from "primereact/toast";
 import "../pages.css";
 import "./editFlat.css";
 import { useLocation, useNavigate } from "react-router-dom";
+import { User } from "../../models/User";
+import { LocalStorageService } from "../../services/LocalStoraeService";
 
 export const EditFlat = () => {
 
   const [flat, setFlat] = useState(new Flat());
-  const { user, updateUser } = useContext(UserContext);
+  // const { user, updateUser } = useContext(UserContext);
+  const [user, setUser] = useState(new User());
   const toast = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
   const flatToEdit = location.state.flat;
 
   useEffect(() => {
-    // AuthService.isAuthenticated(user);
+    const localStorageService = new LocalStorageService();
+    if (!localStorageService.isAuthenticated()) {
+      window.location.href = "/login";
+    }
   }, []);
 
   useEffect(() => {
