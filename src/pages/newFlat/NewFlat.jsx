@@ -25,6 +25,8 @@ export const NewFlat = () => {
     const localStorageService = new LocalStorageService();
     if (!localStorageService.isAuthenticated()) {
       window.location.href = "/login";
+    } else {
+      setUser(localStorageService.getLoggedUser());
     }
   }, []);
 

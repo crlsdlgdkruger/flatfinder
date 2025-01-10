@@ -13,7 +13,7 @@ import { LocalStorageService } from "../../services/LocalStoraeService";
 export const ViewFlat = () => {
 
   // const { user, updateUser } = useContext(UserContext);
-  const [user, setUser] = useState(new User());
+  const [user, setUser] = useState(null);
   const location = useLocation();
   const flat = location.state.flat;
 
@@ -21,12 +21,14 @@ export const ViewFlat = () => {
     const localStorageService = new LocalStorageService();
     if (!localStorageService.isAuthenticated()) {
       window.location.href = "/login";
+    } else {
+      setUser(localStorageService.getLoggedUser());
     }
   }, []);
 
 
   return (
-    <div className="page-wrapper">
+    user && (<div className="page-wrapper">
       <div className="header-wrapper">
         <header>
           <Header />
@@ -44,6 +46,6 @@ export const ViewFlat = () => {
           <Footer />
         </footer>
       </div>
-    </div>
+    </div>)
   )
 }
