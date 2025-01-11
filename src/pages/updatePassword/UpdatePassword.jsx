@@ -8,10 +8,12 @@ import UserContext from "../../context/UserContext"
 import { Password } from "primereact/password"
 import { Button } from "primereact/button"
 import { useNavigate } from "react-router-dom"
+import { LocalStorageService } from "../../services/LocalStoraeService"
 
 export const UpdatePassword = () => {
 
-  const { user, updateUser } = useContext(UserContext);
+  // const { user, updateUser } = useContext(UserContext);
+  const [user, setUser] = useState([]);
   const [userToEdit, setUserToEdit] = useState({});
   const [errors, setErrors] = useState({});
   const [currentPassword, setCurrentPassword] = useState("");
@@ -22,9 +24,18 @@ export const UpdatePassword = () => {
 
   useEffect(() => {
     if (user.length > 0) {
-      setUserToEdit({ ...user[0], birthDate: new Date(user[0].birthDate.toDate()), id: user[0].id });
+      setUserToEdit({ ...user[0], birthDate: new Date(user[0].birthDate.seconds * 1000) });
     }
   }, [user]);
+
+  useEffect(() => {
+    const localStorageService = new LocalStorageService();
+    if (!localStorageService.isAuthenticated()) {
+      window.location.href = "/login";
+    } else {
+      setUser(localStorageService.getLoggedUser());
+    }
+  }, []);
 
   const updatePassword = async (e) => {
     e.preventDefault();
@@ -33,7 +44,7 @@ export const UpdatePassword = () => {
       setUserToEdit({ ...userToEdit, password: newPassword });
       const updatedUser = { ...userToEdit, password: newPassword }; // Actualiza solo aquí
       const data = service.editUser(updatedUser);
-      updateUser(await service.getUser(updatedUser.email));
+      setUser(await service.getUser(updatedUser.email));
       console.log('updated User', updatedUser);
       console.log('data', data);
       if (data) {
