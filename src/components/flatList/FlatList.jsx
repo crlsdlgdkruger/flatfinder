@@ -38,8 +38,20 @@ export const FlatList = () => {
     navigate("/viewflat", { state: { flat } });
   };
 
-  const handleFavorite = (flat) => {
-    toggleFavorite(flat);
+  const handleFavorite = async (flat) => {
+    try {
+      await toggleFavorite(flat);
+      setFlats((prevFlats) =>
+        prevFlats.map((f) =>
+          f.id === flat.id
+            ? { ...f, isFavorite: !f.isFavorite } // Actualiza el estado local
+            : f
+        )
+      );
+    } catch (error) {
+      console.error("Error al actualizar favoritos:", error);
+      alert("No se pudo actualizar el favorito. Inténtalo nuevamente.");
+    }
   };
 
   const toggleFavorite = async (flat) => {
@@ -63,9 +75,11 @@ export const FlatList = () => {
 
 
   const actionBodyTemplate = (rowData) => {
+    const localStorageService = new LocalStorageService();
+    const userLogged = localStorageService.getLoggedUser();
     return (
       <div className='action-buttons'>
-        {
+        {!userLogged[0].favoriteFlats.includes(rowData.id) ?
           <Button
             icon="pi pi-heart"
             rounded
@@ -73,7 +87,15 @@ export const FlatList = () => {
             outlined
             tooltip="Add to favorites" tooltipOptions={{ position: 'top', mouseTrackTop: 15, showDelay: 500 }}
             onClick={() => handleFavorite(rowData)}
-          />}
+          /> :
+          <Button
+            icon="pi pi-heart"
+            rounded
+            severity='danger'
+            tooltip="Remove to favorites" tooltipOptions={{ position: 'top', mouseTrackTop: 15, showDelay: 500 }}
+            onClick={() => handleFavorite(rowData)}
+          />
+        }
 
         <Button
           icon="pi pi-eye"
