@@ -1,12 +1,14 @@
 import { DataTable } from 'primereact/datatable';
 import { useEffect, useState } from 'react';
 import { FlatService } from '../../services/FlatService';
+import { UserService } from '../../services/UserService';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 import "./flatList.css";
 import { InputText } from 'primereact/inputtext';
 import { InputNumber } from 'primereact/inputnumber';
+import { LocalStorageService } from '../../services/LocalStoraeService';
 
 export const FlatList = () => {
 
@@ -37,21 +39,31 @@ export const FlatList = () => {
   };
 
   const handleFavorite = (flat) => {
-    console.log("Favorite flat:", flat);
+    toggleFavorite(flat);
+  };
+
+  const toggleFavorite = async (flat) => {
+    const userService = new UserService();
+    const localStorageService = new LocalStorageService();
+    const userLogged = localStorageService.getLoggedUser();
+    const us = await userService.toggleFavorite(userLogged[0], flat.id);
+    console.log('userLogged', us);
   };
 
 
   const actionBodyTemplate = (rowData) => {
     return (
       <div className='action-buttons'>
-        <Button
-          icon="pi pi-heart"
-          rounded
-          severity='danger'
-          outlined
-          tooltip="Add to favorites" tooltipOptions={{ position: 'top', mouseTrackTop: 15, showDelay: 500 }}
-          onClick={() => handleFavorite(rowData)}
-        />
+        {
+          <Button
+            icon="pi pi-heart"
+            rounded
+            severity='danger'
+            outlined
+            tooltip="Add to favorites" tooltipOptions={{ position: 'top', mouseTrackTop: 15, showDelay: 500 }}
+            onClick={() => handleFavorite(rowData)}
+          />}
+
         <Button
           icon="pi pi-eye"
           rounded

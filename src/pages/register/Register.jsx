@@ -13,7 +13,7 @@ export const Register = () => {
 
   const submitRegister = async (userToEdit) => {
     const service = new UserService();
-    const data = await service.register(userToEdit);
+    const data = await service.register({ ...userToEdit, favoriteFlats: [] });
     if (data) {
       toast.current.show({ severity: 'success', summary: 'Success', detail: 'User created successfully, please login', life: 3000 });
       setTimeout(() => {

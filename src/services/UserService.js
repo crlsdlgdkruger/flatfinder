@@ -30,7 +30,6 @@ export class UserService {
   }
 
   async register(user) {
-    console.log('REGISTER', user);
     const q = query(
       this.usersCollectionRef,
       where("email", "==", user.email)
@@ -49,6 +48,34 @@ export class UserService {
     }
     const docRef = doc(db, "users", user.id);
     return await updateDoc(docRef, user);
+  }
+
+  async toggleFavorite(userLogged, flatId) {
+    if (userLogged.birthDate) {
+      userLogged.birthDate = new Date(userLogged.birthDate.seconds * 1000); // Convierte a objeto Date
+    }
+
+
+    console.log('toggleFavorite', userLogged, flatId);
+
+    const q = query(
+      this.usersCollectionRef,
+      where("email", "==", userLogged.email),
+    );
+    const data = await getDocs(q);
+    if (data.docs.length === 0) {
+      return null;
+    } else {
+      const user = Utils.getData(data)[0];
+      if (user.favoriteFlats.includes(flatId)) {
+        const index = user.favoriteFlats.indexOf(flatId);
+        user.favoriteFlats.splice(index, 1);
+      } else {
+        user.favoriteFlats.push(flatId);
+      }
+      const docRef = doc(db, "users", user.id);
+      return await updateDoc(docRef, user);
+    }
   }
 }
 

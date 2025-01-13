@@ -5,5 +5,6 @@ export class User {
     this.firstName = firstName
     this.lastName = lastName
     this.birthDate = birthDate
+    this.favoriteFlats = [];
   }
 }
