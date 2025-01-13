@@ -46,8 +46,19 @@ export const FlatList = () => {
     const userService = new UserService();
     const localStorageService = new LocalStorageService();
     const userLogged = localStorageService.getLoggedUser();
-    const us = await userService.toggleFavorite(userLogged[0], flat.id);
-    console.log('userLogged', us);
+    try {
+      const us = await userService.toggleFavorite(userLogged[0], flat.id);
+      console.log('US', us);
+      if (us) {
+        console.log('userLogged actualizado', us);
+        localStorageService.addLoggedUser(us);
+      } else {
+        console.warn('El usuario no fue encontrado en la base de datos.');
+      }
+    } catch (error) {
+      console.error('Ocurrió un error al intentar actualizar los favoritos:', error.message);
+      alert('Hubo un problema al actualizar tus favoritos. Por favor, inténtalo de nuevo más tarde.');
+    }
   };
 
 

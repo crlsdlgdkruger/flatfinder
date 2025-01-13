@@ -54,9 +54,7 @@ export class UserService {
     if (userLogged.birthDate) {
       userLogged.birthDate = new Date(userLogged.birthDate.seconds * 1000); // Convierte a objeto Date
     }
-
-
-    console.log('toggleFavorite', userLogged, flatId);
+    // console.log('toggleFavorite', userLogged, flatId);
 
     const q = query(
       this.usersCollectionRef,
@@ -74,7 +72,13 @@ export class UserService {
         user.favoriteFlats.push(flatId);
       }
       const docRef = doc(db, "users", user.id);
-      return await updateDoc(docRef, user);
+      try {
+        await updateDoc(docRef, user);
+        return [user];
+      } catch (error) {
+        console.error('Error al actualizar favoritos en Firestore:', error);
+        throw new Error('No se pudo actualizar los favoritos. Inténtalo de nuevo más tarde.');
+      }
     }
   }
 }
