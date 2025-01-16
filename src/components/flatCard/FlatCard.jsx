@@ -2,10 +2,45 @@ import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { useNavigate } from "react-router-dom";
 import "./flatCard.css"
+import { Utils } from "../../services/Utils";
+import { useEffect, useState } from "react";
+import { LocalStorageService } from "../../services/LocalStoraeService";
 
 export const FlatCard = ({ flat, userId }) => {
 
   const navigate = useNavigate();
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [userLogged, setUserLogged] = useState([]);
+
+  useEffect(() => {
+    const localStorageService = new LocalStorageService();
+    setUserLogged(localStorageService.getLoggedUser());
+  }, []);
+
+  useEffect(() => {
+    console.log('userLogged', userLogged);
+  }, [userLogged]);
+
+  const handleFavorite = async (flat) => {
+    try {
+      await Utils.toggleFavorite(flat);
+
+      const updatedUser = { ...userLogged[0] };
+      if (updatedUser.favoriteFlats?.includes(flat.id)) {
+        updatedUser.favoriteFlats = updatedUser.favoriteFlats.filter(
+          (favId) => favId !== flat.id
+        );
+        setIsFavorite(false);
+      } else {
+        updatedUser.favoriteFlats = [...(updatedUser.favoriteFlats || []), flat.id];
+        setIsFavorite(true);
+      }
+      setUserLogged([updatedUser]);
+    } catch (error) {
+      console.error("Error al actualizar favoritos:", error);
+      alert("No se pudo actualizar el favorito. Inténtalo nuevamente.");
+    }
+  };
 
   const cardHeader = (
     <div>
@@ -18,7 +53,23 @@ export const FlatCard = ({ flat, userId }) => {
 
   const cardFooter = (
     <div className="card-footer">
-      <Button icon="pi pi-heart" severity="danger" rounded outlined tooltip="Add to favorites" tooltipOptions={{ position: 'top', mouseTrackTop: 15, showDelay: 500 }} />
+      {!userLogged[0]?.favoriteFlats.includes(flat.id) ?
+        <Button
+          icon="pi pi-heart"
+          rounded
+          severity='danger'
+          outlined
+          tooltip="Add to favorites" tooltipOptions={{ position: 'top', mouseTrackTop: 15, showDelay: 500 }}
+          onClick={() => handleFavorite(flat)}
+        /> :
+        <Button
+          icon="pi pi-heart"
+          rounded
+          severity='danger'
+          tooltip="Remove to favorites" tooltipOptions={{ position: 'top', mouseTrackTop: 15, showDelay: 500 }}
+          onClick={() => handleFavorite(flat)}
+        />
+      }
       {flat.userId === userId && <Button icon="pi pi-pencil" severity="success" rounded tooltip="Edit Flat" tooltipOptions={{ position: 'top', mouseTrackTop: 15, showDelay: 500 }} onClick={() => { navigate("/editflat", { state: { flat } }) }} />}
 
     </div>

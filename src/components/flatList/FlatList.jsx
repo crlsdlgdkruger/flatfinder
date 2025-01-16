@@ -9,6 +9,7 @@ import "./flatList.css";
 import { InputText } from 'primereact/inputtext';
 import { InputNumber } from 'primereact/inputnumber';
 import { LocalStorageService } from '../../services/LocalStoraeService';
+import { Utils } from '../../services/Utils';
 
 export const FlatList = () => {
 
@@ -40,7 +41,8 @@ export const FlatList = () => {
 
   const handleFavorite = async (flat) => {
     try {
-      await toggleFavorite(flat);
+      // await toggleFavorite(flat);
+      await Utils.toggleFavorite(flat);
       setFlats((prevFlats) =>
         prevFlats.map((f) =>
           f.id === flat.id
@@ -54,24 +56,24 @@ export const FlatList = () => {
     }
   };
 
-  const toggleFavorite = async (flat) => {
-    const userService = new UserService();
-    const localStorageService = new LocalStorageService();
-    const userLogged = localStorageService.getLoggedUser();
-    try {
-      const us = await userService.toggleFavorite(userLogged[0], flat.id);
-      console.log('US', us);
-      if (us) {
-        console.log('userLogged actualizado', us);
-        localStorageService.addLoggedUser(us);
-      } else {
-        console.warn('El usuario no fue encontrado en la base de datos.');
-      }
-    } catch (error) {
-      console.error('Ocurrió un error al intentar actualizar los favoritos:', error.message);
-      alert('Hubo un problema al actualizar tus favoritos. Por favor, inténtalo de nuevo más tarde.');
-    }
-  };
+  // const toggleFavorite = async (flat) => {
+  //   const userService = new UserService();
+  //   const localStorageService = new LocalStorageService();
+  //   const userLogged = localStorageService.getLoggedUser();
+  //   try {
+  //     const us = await userService.toggleFavorite(userLogged[0], flat.id);
+  //     console.log('US', us);
+  //     if (us) {
+  //       console.log('userLogged actualizado', us);
+  //       localStorageService.addLoggedUser(us);
+  //     } else {
+  //       console.warn('El usuario no fue encontrado en la base de datos.');
+  //     }
+  //   } catch (error) {
+  //     console.error('Ocurrió un error al intentar actualizar los favoritos:', error.message);
+  //     alert('Hubo un problema al actualizar tus favoritos. Por favor, inténtalo de nuevo más tarde.');
+  //   }
+  // };
 
 
   const actionBodyTemplate = (rowData) => {
