@@ -1,0 +1,15 @@
+.content-wrapper{
+  position: relative;
+}
+
+.add-button-wrapper{
+  position: absolute;
+  bottom: 2rem;
+  right: 5rem;
+}
+
+@media screen and (max-width: 1110px) {
+  .add-button-wrapper{
+    right: 2rem;
+  }
+}

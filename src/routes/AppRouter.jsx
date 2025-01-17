@@ -5,6 +5,7 @@ import { Register } from "../pages/register/Register";
 import { UserContextProvider } from "../context/UserContext";
 import { MyProfile } from "../pages/myProfile/MyProfile";
 import { NewFlat } from "../pages/newFlat/NewFlat";
+import { MyFlats } from "../pages/myFlats/MyFlats";
 import { Favorites } from "../pages/favorites/Favorites";
 import { ViewFlat } from "../pages/viewFlat/ViewFlat";
 import { EditFlat } from "../pages/editFlat/EditFlat";
@@ -21,6 +22,7 @@ const AppRouter = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/myProfile" element={<MyProfile />} />
         <Route path="/newFlat" element={<NewFlat />} />
+        <Route path="/myFlats" element={<MyFlats />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/viewFlat" element={<ViewFlat />} />
         <Route path="/editflat" element={<EditFlat />} />

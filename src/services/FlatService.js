@@ -57,4 +57,18 @@ export class FlatService {
     const docRef = doc(db, "flats", flat.id);
     return await updateDoc(docRef, flat);
   }
+
+  async getFlatsByUserId(userId) {
+    const q = query(this.usersCollectionRef, where("userId", "==", userId));
+    const data = await getDocs(q);
+    const response = data.docs.map((doc) => {
+      const flat = doc.data();
+      if (flat.dateAvailable && flat.dateAvailable.seconds) {
+        const date = new Date(flat.dateAvailable.seconds * 1000);
+        flat.dateAvailable = date.toISOString().split("T")[0];
+      }
+      return { ...flat, id: doc.id };
+    });
+    return response;
+  }
 }

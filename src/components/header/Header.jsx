@@ -15,10 +15,15 @@ export const Header = () => {
       icon: 'pi pi-fw pi-home',
       command: () => navigate("/home")
     },
+    // {
+    //   label: 'New Flat',
+    //   icon: 'pi pi-fw pi-plus',
+    //   command: () => navigate("/newflat")
+    // },
     {
-      label: 'New Flat',
-      icon: 'pi pi-fw pi-plus',
-      command: () => navigate("/newflat")
+      label: 'My Flats',
+      icon: 'pi pi-fw pi-inbox',
+      command: () => navigate("/myflats")
     },
     {
       label: 'Favorites',

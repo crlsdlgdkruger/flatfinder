@@ -11,7 +11,7 @@ import { InputNumber } from 'primereact/inputnumber';
 import { LocalStorageService } from '../../services/LocalStoraeService';
 import { Utils } from '../../services/Utils';
 
-export const FlatList = ({ favoriteFlats = [] }) => {
+export const FlatList = ({ favoriteFlats = [], userId }) => {
 
   const [flats, setFlats] = useState([]);
   const [cityFilter, setCityFilter] = useState("");
@@ -24,16 +24,18 @@ export const FlatList = ({ favoriteFlats = [] }) => {
 
 
   useEffect(() => {
-    if (Object.keys(favoriteFlats).length === 0) {
+    if (Object.keys(favoriteFlats).length === 0 && !userId) {
       fetchFlats();
+    } else if (userId) {
+      fetchMyFlats();
     } else {
       fetchFavoriteFlats();
     }
   }, []);
 
   useEffect(() => {
-    console.log('flats', flats);
-  }, [flats]);
+    console.log('flats', flats, userId);
+  }, [flats, userId]);
 
   const fetchFlats = async () => {
     const service = new FlatService();
@@ -44,6 +46,13 @@ export const FlatList = ({ favoriteFlats = [] }) => {
   const fetchFavoriteFlats = async () => {
     const service = new FlatService();
     const data = await service.getFlatsByIds(favoriteFlats);
+    setFlats(data);
+  };
+
+  const fetchMyFlats = async () => {
+    const service = new FlatService();
+    const data = await service.getFlatsByUserId(userId);
+    console.log('data', data)
     setFlats(data);
   };
 
