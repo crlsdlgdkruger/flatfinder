@@ -9,7 +9,6 @@ import { LocalStorageService } from "../../services/LocalStoraeService";
 export const FlatCard = ({ flat, userId }) => {
 
   const navigate = useNavigate();
-  const [isFavorite, setIsFavorite] = useState(false);
   const [userLogged, setUserLogged] = useState([]);
 
   useEffect(() => {
@@ -30,10 +29,8 @@ export const FlatCard = ({ flat, userId }) => {
         updatedUser.favoriteFlats = updatedUser.favoriteFlats.filter(
           (favId) => favId !== flat.id
         );
-        setIsFavorite(false);
       } else {
         updatedUser.favoriteFlats = [...(updatedUser.favoriteFlats || []), flat.id];
-        setIsFavorite(true);
       }
       setUserLogged([updatedUser]);
     } catch (error) {

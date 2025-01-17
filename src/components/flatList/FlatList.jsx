@@ -11,7 +11,7 @@ import { InputNumber } from 'primereact/inputnumber';
 import { LocalStorageService } from '../../services/LocalStoraeService';
 import { Utils } from '../../services/Utils';
 
-export const FlatList = () => {
+export const FlatList = ({ favoriteFlats = [] }) => {
 
   const [flats, setFlats] = useState([]);
   const [cityFilter, setCityFilter] = useState("");
@@ -21,19 +21,31 @@ export const FlatList = () => {
   const [maxAreaFilter, setMaxAreaFilter] = useState(0);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchFlats = async () => {
-      const service = new FlatService();
-      const data = await service.getFlats();
-      setFlats(data);
-    };
 
-    fetchFlats();
+
+  useEffect(() => {
+    if (Object.keys(favoriteFlats).length === 0) {
+      fetchFlats();
+    } else {
+      fetchFavoriteFlats();
+    }
   }, []);
 
   useEffect(() => {
     console.log('flats', flats);
   }, [flats]);
+
+  const fetchFlats = async () => {
+    const service = new FlatService();
+    const data = await service.getFlats();
+    setFlats(data);
+  };
+
+  const fetchFavoriteFlats = async () => {
+    const service = new FlatService();
+    const data = await service.getFlatsByIds(favoriteFlats);
+    setFlats(data);
+  };
 
   const handleView = (flat) => {
     navigate("/viewflat", { state: { flat } });
@@ -41,7 +53,6 @@ export const FlatList = () => {
 
   const handleFavorite = async (flat) => {
     try {
-      // await toggleFavorite(flat);
       await Utils.toggleFavorite(flat);
       setFlats((prevFlats) =>
         prevFlats.map((f) =>
@@ -55,25 +66,6 @@ export const FlatList = () => {
       alert("No se pudo actualizar el favorito. Inténtalo nuevamente.");
     }
   };
-
-  // const toggleFavorite = async (flat) => {
-  //   const userService = new UserService();
-  //   const localStorageService = new LocalStorageService();
-  //   const userLogged = localStorageService.getLoggedUser();
-  //   try {
-  //     const us = await userService.toggleFavorite(userLogged[0], flat.id);
-  //     console.log('US', us);
-  //     if (us) {
-  //       console.log('userLogged actualizado', us);
-  //       localStorageService.addLoggedUser(us);
-  //     } else {
-  //       console.warn('El usuario no fue encontrado en la base de datos.');
-  //     }
-  //   } catch (error) {
-  //     console.error('Ocurrió un error al intentar actualizar los favoritos:', error.message);
-  //     alert('Hubo un problema al actualizar tus favoritos. Por favor, inténtalo de nuevo más tarde.');
-  //   }
-  // };
 
 
   const actionBodyTemplate = (rowData) => {

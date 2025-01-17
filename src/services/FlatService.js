@@ -1,5 +1,5 @@
 import { db } from "../config/firebase";
-import { collection, getDocs, addDoc, query, where, doc, updateDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, query, where, doc, updateDoc, getDoc } from "firebase/firestore";
 import { Utils } from "./Utils";
 
 export class FlatService {
@@ -19,9 +19,32 @@ export class FlatService {
     });
   }
 
+  async getFlatsByIds(flatIds) {
+    console.log('getFlatsByIds', flatIds);
+
+    const flats = [];
+    for (const flatId of flatIds) {
+      const docRef = doc(this.usersCollectionRef, flatId);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const flat = docSnap.data();
+        flat.id = docSnap.id;
+        flats.push(flat);
+      }
+    }
+
+    flats.forEach(flat => {
+      if (flat.dateAvailable && flat.dateAvailable.seconds) {
+        const date = new Date(flat.dateAvailable.seconds * 1000);
+        flat.dateAvailable = date.toISOString().split("T")[0];
+      }
+    });
+    return flats;
+  }
+
   async createFlat(flat) {
     if (flat.dateAvailable) {
-      flat.dateAvailable = new Date(flat.dateAvailable); // Convierte a objeto Date
+      flat.dateAvailable = new Date(flat.dateAvailable);
     }
     return await addDoc(this.usersCollectionRef, flat);
   }
@@ -29,7 +52,7 @@ export class FlatService {
   async updateFlat(flat) {
     console.log('updateFlat', flat);
     if (flat.dateAvailable) {
-      flat.dateAvailable = new Date(flat.dateAvailable); // Convierte a objeto Date
+      flat.dateAvailable = new Date(flat.dateAvailable);
     }
     const docRef = doc(db, "flats", flat.id);
     return await updateDoc(docRef, flat);

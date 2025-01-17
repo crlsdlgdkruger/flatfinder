@@ -6,6 +6,7 @@ import { Footer } from "../../components/footer/Footer";
 import "../pages.css";
 import { LocalStorageService } from "../../services/LocalStoraeService";
 import { User } from "../../models/User";
+import { FlatList } from "../../components/flatList/FlatList";
 
 export const Favorites = () => {
 
@@ -16,9 +17,12 @@ export const Favorites = () => {
     const localStorageService = new LocalStorageService();
     if (!localStorageService.isAuthenticated()) {
       window.location.href = "/login";
+    } else {
+      setUser(localStorageService.getLoggedUser());
     }
   }, []);
 
+  // useEffect(() => { console.log('favoritepage user', user[0].favoriteFlats) }, [user]);
 
   return (
     <div className="page-wrapper">
@@ -30,6 +34,7 @@ export const Favorites = () => {
       <div className="content-wrapper">
         <main>
           <h1>Favorites</h1>
+          {user[0] && <FlatList favoriteFlats={user[0].favoriteFlats} />}
         </main>
       </div>
       <div className="footer-wrapper">
