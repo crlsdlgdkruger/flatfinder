@@ -1,13 +1,27 @@
 import { Menubar } from "primereact/menubar";
 import { useNavigate } from "react-router-dom";
 import { Avatar } from 'primereact/avatar';
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { InputText } from 'primereact/inputtext';
 import UserContext from "../../context/UserContext";
 import "./header.css"
+import { LocalStorageService } from "../../services/LocalStoraeService";
+import { User } from "../../models/User";
 export const Header = () => {
-  const { user } = useContext(UserContext);
+  // const { user } = useContext(UserContext);
+
   const navigate = useNavigate();
+
+  const [user, setUser] = useState(new User());
+
+  useEffect(() => {
+    const localStorageService = new LocalStorageService();
+    if (!localStorageService.isAuthenticated()) {
+      window.location.href = "/login";
+    } else {
+      setUser(localStorageService.getLoggedUser());
+    }
+  }, []);
 
   const items = [
     {
@@ -23,7 +37,8 @@ export const Header = () => {
     {
       label: 'My Flats',
       icon: 'pi pi-fw pi-inbox',
-      command: () => navigate("/myflats")
+      command: () => navigate(`/myflats/userId/${user[0].id}`),
+
     },
     {
       label: 'Favorites',

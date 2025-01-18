@@ -6,9 +6,11 @@ import { Header } from "../../components/header/Header";
 import { User } from "../../models/User";
 import { LocalStorageService } from "../../services/LocalStoraeService";
 import "./myFlats.css";
+import { useParams } from "react-router-dom";
 
 export const MyFlats = () => {
   const [user, setUser] = useState(new User());
+  const { userId } = useParams();
 
   useEffect(() => {
     const localStorageService = new LocalStorageService();
@@ -20,8 +22,8 @@ export const MyFlats = () => {
   }, []);
 
   useEffect(() => {
-    console.log("user", user);
-  }, [user]);
+    console.log("user", user, " userid params", userId);
+  }, [user, userId]);
 
   return (
     <div className="page-wrapper">
@@ -33,7 +35,7 @@ export const MyFlats = () => {
       <div className="content-wrapper">
         <main>
           <h3>My Flats</h3>
-          {user[0] && <FlatList userId={user[0].id} />}
+          {user[0] && userId && <FlatList userId={userId} />}
         </main>
         <div className="add-button-wrapper">
           <AddButton value={"addFlat"} />
