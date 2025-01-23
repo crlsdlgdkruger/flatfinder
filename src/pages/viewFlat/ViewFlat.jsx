@@ -3,19 +3,23 @@ import UserContext from "../../context/UserContext";
 import { AuthService } from "../../services/AuthService";
 import { Header } from "../../components/header/Header";
 import { Footer } from "../../components/footer/Footer";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { FlatCard } from "../../components/flatCard/FlatCard";
 import "../pages.css";
 import "./viewFlat.css";
 import { User } from "../../models/User";
 import { LocalStorageService } from "../../services/LocalStoraeService";
+import { Flat } from "../../models/Flat";
+import { FlatService } from "../../services/FlatService";
 
 export const ViewFlat = () => {
 
   // const { user, updateUser } = useContext(UserContext);
   const [user, setUser] = useState(null);
+  const [flat, setFlat] = useState(null);
   const location = useLocation();
-  const flat = location.state.flat;
+  const { flatId } = useParams();
+  // const flat = location.state.flat;
 
   useEffect(() => {
     const localStorageService = new LocalStorageService();
@@ -24,7 +28,14 @@ export const ViewFlat = () => {
     } else {
       setUser(localStorageService.getLoggedUser());
     }
+    fetchFlat();
   }, []);
+
+  const fetchFlat = async () => {
+    const service = new FlatService();
+    const flat = await service.getFlatById(flatId);
+    setFlat(flat);
+  }
 
 
   return (

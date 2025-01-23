@@ -24,7 +24,7 @@ const AppRouter = () => {
         <Route path="/newFlat" element={<NewFlat />} />
         <Route path="/myFlats/userId/:userId" element={<MyFlats />} />
         <Route path="/favorites/userId/:userId" element={<Favorites />} />
-        <Route path="/viewFlat" element={<ViewFlat />} />
+        <Route path="/viewFlat/flatId/:flatId" element={<ViewFlat />} />
         <Route path="/editflat" element={<EditFlat />} />
         <Route path="/editUser" element={<EditUser />} />
         <Route path="/updatePassword" element={<UpdatePassword />} />

@@ -57,7 +57,8 @@ export const FlatList = ({ favoriteFlats = [], userId }) => {
   };
 
   const handleView = (flat) => {
-    navigate("/viewflat", { state: { flat } });
+    // navigate(`/viewflat/:${flat.id}`, { state: { flat } });
+    navigate(`/viewflat/flatId/${flat.id}`);
   };
 
   const handleFavorite = async (flat) => {
