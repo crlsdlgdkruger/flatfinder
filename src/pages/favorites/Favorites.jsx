@@ -7,11 +7,13 @@ import "../pages.css";
 import { LocalStorageService } from "../../services/LocalStoraeService";
 import { User } from "../../models/User";
 import { FlatList } from "../../components/flatList/FlatList";
+import { useParams } from "react-router-dom";
 
 export const Favorites = () => {
 
   // const { user, updateUser } = useContext(UserContext);
   const [user, setUser] = useState(new User());
+  const { userId } = useParams();
 
   useEffect(() => {
     const localStorageService = new LocalStorageService();
@@ -34,7 +36,7 @@ export const Favorites = () => {
       <div className="content-wrapper">
         <main>
           <h1>Favorites</h1>
-          {user[0] && <FlatList favoriteFlats={user[0].favoriteFlats} />}
+          {user[0] && userId && <FlatList favoriteFlats={user[0].favoriteFlats} />}
         </main>
       </div>
       <div className="footer-wrapper">

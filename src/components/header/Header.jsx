@@ -43,7 +43,7 @@ export const Header = () => {
     {
       label: 'Favorites',
       icon: 'pi pi-fw pi-heart',
-      command: () => navigate("/favorites")
+      command: () => navigate(`/favorites/userId/${user[0].id}`),
     },
     {
       label: 'Profile',
