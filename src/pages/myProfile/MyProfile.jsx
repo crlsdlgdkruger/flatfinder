@@ -8,19 +8,37 @@ import "../pages.css";
 import "./myProfile.css";
 import { LocalStorageService } from "../../services/LocalStoraeService";
 import { User } from "../../models/User";
+import { useParams } from "react-router-dom";
+import { use } from "react";
+import { UserService } from "../../services/UserService";
 
 
 export const MyProfile = () => {
 
   // const { user, updateUser } = useContext(UserContext);
-  const [user, setUser] = useState(new User());
+  const [userLogged, setUserLogged] = useState(new User());
+  const [user, setUser] = useState(new User());// este usuario es el que se mostrara en el card, no necesariamente al usuario logueado
+  const { userId } = useParams(); // id del usuario que se va a mostrar en el card
 
   useEffect(() => {
     const localStorageService = new LocalStorageService();
     if (!localStorageService.isAuthenticated()) {
       window.location.href = "/login";
     }
+    // else {
+    //   setUserLogged(localStorageService.getLoggedUser());
+    // }
   }, []);
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const fetchUser = async () => {
+    const service = new UserService();
+    const user = await service.getUserById(userId);
+    setUser(user);
+  }
 
 
   return (
@@ -33,7 +51,7 @@ export const MyProfile = () => {
       <div className="content-wrapper">
         <main>
           <div className="user-card-wrapper">
-            <UserCard />
+            {user && <UserCard user={user} />}
           </div>
         </main>
       </div>

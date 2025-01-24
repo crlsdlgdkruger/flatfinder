@@ -52,7 +52,7 @@ export const Header = () => {
         {
           label: 'My Profile',
           icon: 'pi pi-fw pi-user',
-          command: () => navigate("/myProfile")
+          command: () => navigate(`/myProfile/userId/${user[0].id}`)
         },
         {
           label: 'Update Password',

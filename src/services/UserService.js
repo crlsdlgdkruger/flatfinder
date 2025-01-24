@@ -1,5 +1,5 @@
 import { db } from "../config/firebase";
-import { collection, getDocs, addDoc, query, where, updateDoc, doc } from "firebase/firestore";
+import { collection, getDocs, addDoc, query, where, updateDoc, doc, getDoc } from "firebase/firestore";
 import { Utils } from "./Utils";
 export class UserService {
   constructor() {
@@ -18,6 +18,16 @@ export class UserService {
     );
     const data = await getDocs(q);
     return Utils.getData(data);
+  }
+
+  async getUserById(id) {
+    const docRef = doc(this.usersCollectionRef, id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      return null;
+    }
   }
 
   async getUser(email) {
