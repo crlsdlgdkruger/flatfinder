@@ -13,7 +13,7 @@ import { LocalStorageService } from "../../services/LocalStoraeService"
 export const UpdatePassword = () => {
 
   // const { user, updateUser } = useContext(UserContext);
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState(null);
   const [userToEdit, setUserToEdit] = useState({});
   const [errors, setErrors] = useState({});
   const [currentPassword, setCurrentPassword] = useState("");
@@ -23,7 +23,7 @@ export const UpdatePassword = () => {
   const toast = useRef(null);
 
   useEffect(() => {
-    if (user.length > 0) {
+    if (user) {
       setUserToEdit({ ...user[0], birthDate: new Date(user[0].birthDate.seconds * 1000) });
     }
   }, [user]);

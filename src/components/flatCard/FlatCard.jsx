@@ -67,7 +67,7 @@ export const FlatCard = ({ flat, userId }) => {
           onClick={() => handleFavorite(flat)}
         />
       }
-      {flat.userId === userId && <Button icon="pi pi-pencil" severity="success" rounded tooltip="Edit Flat" tooltipOptions={{ position: 'top', mouseTrackTop: 15, showDelay: 500 }} onClick={() => { navigate("/editflat", { state: { flat } }) }} />}
+      {flat.userId === userId && <Button icon="pi pi-pencil" severity="success" rounded tooltip="Edit Flat" tooltipOptions={{ position: 'top', mouseTrackTop: 15, showDelay: 500 }} onClick={() => { navigate(`/editflat/flatId/${flat.id}`, { state: { flat } }) }} />}
 
     </div>
   )
