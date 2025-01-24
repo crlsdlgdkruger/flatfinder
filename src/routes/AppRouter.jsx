@@ -26,7 +26,7 @@ const AppRouter = () => {
         <Route path="/favorites/userId/:userId" element={<Favorites />} />
         <Route path="/viewFlat/flatId/:flatId" element={<ViewFlat />} />
         <Route path="/editflat" element={<EditFlat />} />
-        <Route path="/editUser" element={<EditUser />} />
+        <Route path="/editUser/userId/:userId" element={<EditUser />} />
         <Route path="/updatePassword" element={<UpdatePassword />} />
       </Routes>
     </UserContextProvider>

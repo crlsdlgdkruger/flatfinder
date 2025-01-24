@@ -15,9 +15,7 @@ import { UserService } from "../../services/UserService";
 
 export const MyProfile = () => {
 
-  // const { user, updateUser } = useContext(UserContext);
-  const [userLogged, setUserLogged] = useState(new User());
-  const [user, setUser] = useState(new User());// este usuario es el que se mostrara en el card, no necesariamente al usuario logueado
+  const [user, setUser] = useState(null);// este usuario es el que se mostrara en el card, no necesariamente al usuario logueado
   const { userId } = useParams(); // id del usuario que se va a mostrar en el card
 
   useEffect(() => {
