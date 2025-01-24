@@ -25,14 +25,17 @@ export const EditUser = () => {
     if (!localStorageService.isAuthenticated()) {
       window.location.href = "/login";
     }
+    setUser(localStorageService.getLoggedUser());
   }, []);
 
   const editUser = async (userToEdit) => {
     const service = new UserService();
     const data = service.editUser({ ...userToEdit, id: user[0].id });
-    setUser(await service.getUser(userToEdit.email));
+    const auxUser = await service.getUser(userToEdit.email);
+    console.log('auxUser', auxUser);
+    setUser(auxUser);
     const localStorageService = new LocalStorageService();
-    localStorageService.addLoggedUser(user);
+    localStorageService.addLoggedUser(auxUser);
 
     if (data) {
       toast.current.show({ severity: 'info', summary: 'Info', detail: 'User updated', life: 2000 });
@@ -45,7 +48,7 @@ export const EditUser = () => {
   }
 
   const formatedUser = (user) => {
-    return { ...user, birthDate: new Date(user.birthDate.toDate()) };
+    return { ...user, birthDate: new Date(user.birthDate.seconds * 1000) };
   }
 
   return (
@@ -59,7 +62,7 @@ export const EditUser = () => {
         <Toast ref={toast} />
         <main>
           <h1>Edit User</h1>
-          <UserForm user={formatedUser(user[0])} setUser={setUser} action={editUser} buttonAction="Update" />
+          {user[0] && <UserForm user={formatedUser(user[0])} setUser={setUser} action={editUser} buttonAction="Update" />}
         </main>
       </div>
       <div className="footer-wrapper">
