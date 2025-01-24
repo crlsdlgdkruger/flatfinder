@@ -48,7 +48,7 @@ export const ViewFlat = () => {
       <div className="content-wrapper">
         <main>
           <div className="flat-card-wrapper">
-            <FlatCard flat={flat} userId={user[0].id} />
+            {user && flat && <FlatCard flat={flat} userId={user[0].id} />}
           </div>
         </main>
       </div>

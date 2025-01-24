@@ -32,7 +32,7 @@ export const EditUser = () => {
     const service = new UserService();
     const data = service.editUser({ ...userToEdit, id: user[0].id });
     const auxUser = await service.getUser(userToEdit.email);
-    console.log('auxUser', auxUser);
+    // console.log('auxUser', auxUser);
     setUser(auxUser);
     const localStorageService = new LocalStorageService();
     localStorageService.addLoggedUser(auxUser);
