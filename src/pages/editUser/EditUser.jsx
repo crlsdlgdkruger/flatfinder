@@ -15,8 +15,6 @@ import { use } from "react";
 
 export const EditUser = () => {
 
-  // const [flat, setFlat] = useState(new Flat());
-  // const { user, updateUser } = useContext(UserContext);
   const [user, setUser] = useState(null);
   const [userLogged, setUserLogged] = useState(new User());
   const toast = useRef(null);
@@ -24,10 +22,10 @@ export const EditUser = () => {
   const { userId } = useParams();
 
   const userService = new UserService();
+  const localStorageService = new LocalStorageService();
 
 
   useEffect(() => {
-    const localStorageService = new LocalStorageService();
     if (!localStorageService.isAuthenticated()) {
       window.location.href = "/login";
     }
@@ -48,11 +46,12 @@ export const EditUser = () => {
   }
 
   const editUser = async (userToEdit) => {
-    const data = userService.editUser({ ...userToEdit, id: user.id });
+    const data = userService.editUser(userToEdit);
     const auxUser = await userService.getUser(userToEdit.email);
-    setUser(auxUser);
-    const localStorageService = new LocalStorageService();
-    localStorageService.addLoggedUser(auxUser);
+    console.log('auxUser', auxUser, "userLogged", userLogged);
+    if (userLogged[0].id === auxUser[0].id) {
+      localStorageService.addLoggedUser(auxUser);
+    }
 
     if (data) {
       toast.current.show({ severity: 'info', summary: 'Info', detail: 'User updated', life: 2000 });

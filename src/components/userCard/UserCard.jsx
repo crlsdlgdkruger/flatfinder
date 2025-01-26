@@ -15,6 +15,7 @@ export const UserCard = ({ user }) => {
       const age = Utils.calculateAge(user.birthDate);
       setUserAge(age);
     }
+    console.log('UserCard', user);
   }, [user]);
 
   const cardHeader = (

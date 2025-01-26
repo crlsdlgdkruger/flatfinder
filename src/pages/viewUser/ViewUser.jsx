@@ -26,6 +26,7 @@ export const ViewUser = () => {
 
   useEffect(() => {
     fetchUser();
+    console.log('user', user);
   }, []);
 
   const fetchUser = async () => {

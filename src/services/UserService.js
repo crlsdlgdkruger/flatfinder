@@ -29,7 +29,8 @@ export class UserService {
     const docRef = doc(this.usersCollectionRef, id);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      return docSnap.data();
+      // console.log("Document data:", docSnap);
+      return { ...docSnap.data(), id: docSnap.id };
     } else {
       return null;
     }
