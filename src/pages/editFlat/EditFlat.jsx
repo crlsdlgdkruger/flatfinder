@@ -11,7 +11,7 @@ import "../pages.css";
 import "./editFlat.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { User } from "../../models/User";
-import { LocalStorageService } from "../../services/LocalStoraeService";
+import { LocalStorageService } from "../../services/LocalStorageService";
 
 export const EditFlat = () => {
 

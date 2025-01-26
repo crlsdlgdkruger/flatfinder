@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import "./flatList.css";
 import { InputText } from 'primereact/inputtext';
 import { InputNumber } from 'primereact/inputnumber';
-import { LocalStorageService } from '../../services/LocalStoraeService';
+import { LocalStorageService } from '../../services/LocalStorageService';
 import { Utils } from '../../services/Utils';
 
 export const FlatList = ({ favoriteFlats = [], userId }) => {

@@ -11,7 +11,7 @@ import "../pages.css";
 import "./newFlat.css";
 import { useNavigate } from "react-router-dom";
 import { User } from "../../models/User";
-import { LocalStorageService } from "../../services/LocalStoraeService";
+import { LocalStorageService } from "../../services/LocalStorageService";
 
 export const NewFlat = () => {
 

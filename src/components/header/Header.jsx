@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { InputText } from 'primereact/inputtext';
 import UserContext from "../../context/UserContext";
 import "./header.css"
-import { LocalStorageService } from "../../services/LocalStoraeService";
+import { LocalStorageService } from "../../services/LocalStorageService";
 import { User } from "../../models/User";
 export const Header = () => {
 

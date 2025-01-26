@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./flatCard.css"
 import { Utils } from "../../services/Utils";
 import { useEffect, useState } from "react";
-import { LocalStorageService } from "../../services/LocalStoraeService";
+import { LocalStorageService } from "../../services/LocalStorageService";
 
 export const FlatCard = ({ flat, userId }) => {
 

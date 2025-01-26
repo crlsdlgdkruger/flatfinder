@@ -5,7 +5,7 @@ import { Header } from "../../components/header/Header";
 import { Footer } from "../../components/footer/Footer";
 import "../pages.css";
 import { FlatList } from "../../components/flatList/FlatList";
-import { LocalStorageService } from "../../services/LocalStoraeService";
+import { LocalStorageService } from "../../services/LocalStorageService";
 import { User } from "../../models/User";
 
 export const Home = () => {

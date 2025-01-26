@@ -8,7 +8,7 @@ import { FlatCard } from "../../components/flatCard/FlatCard";
 import "../pages.css";
 import "./viewFlat.css";
 import { User } from "../../models/User";
-import { LocalStorageService } from "../../services/LocalStoraeService";
+import { LocalStorageService } from "../../services/LocalStorageService";
 import { Flat } from "../../models/Flat";
 import { FlatService } from "../../services/FlatService";
 

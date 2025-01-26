@@ -6,33 +6,50 @@ import { Footer } from "../../components/footer/Footer";
 import { Toast } from "primereact/toast";
 import "../pages.css";
 import "./editUser.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { UserService } from "../../services/UserService";
 import { UserForm } from "../../components/userForm/UserForm";
 import { User } from "../../models/User";
-import { LocalStorageService } from "../../services/LocalStoraeService";
+import { LocalStorageService } from "../../services/LocalStorageService";
+import { use } from "react";
 
 export const EditUser = () => {
 
   // const [flat, setFlat] = useState(new Flat());
   // const { user, updateUser } = useContext(UserContext);
-  const [user, setUser] = useState(new User());
+  const [user, setUser] = useState(null);
+  const [userLogged, setUserLogged] = useState(new User());
   const toast = useRef(null);
   const navigate = useNavigate();
+  const { userId } = useParams();
+
+  const userService = new UserService();
+
 
   useEffect(() => {
     const localStorageService = new LocalStorageService();
     if (!localStorageService.isAuthenticated()) {
       window.location.href = "/login";
     }
-    setUser(localStorageService.getLoggedUser());
+    setUserLogged(localStorageService.getLoggedUser());
   }, []);
 
+  useEffect(() => {
+    if (userId) {
+      fetchUser();
+    }
+  }, []);
+
+  const fetchUser = async () => {
+    let userAux = await userService.getUserById(userId);
+    userAux = formatedUser(userAux);
+    console.log('userAux', userAux);
+    setUser(userAux);
+  }
+
   const editUser = async (userToEdit) => {
-    const service = new UserService();
-    const data = service.editUser({ ...userToEdit, id: user[0].id });
-    const auxUser = await service.getUser(userToEdit.email);
-    // console.log('auxUser', auxUser);
+    const data = userService.editUser({ ...userToEdit, id: user.id });
+    const auxUser = await userService.getUser(userToEdit.email);
     setUser(auxUser);
     const localStorageService = new LocalStorageService();
     localStorageService.addLoggedUser(auxUser);
@@ -62,7 +79,7 @@ export const EditUser = () => {
         <Toast ref={toast} />
         <main>
           <h1>Edit User</h1>
-          {user[0] && <UserForm user={formatedUser(user[0])} setUser={setUser} action={editUser} buttonAction="Update" />}
+          {user && <UserForm user={user} setUser={setUser} action={editUser} buttonAction="Update" />}
         </main>
       </div>
       <div className="footer-wrapper">

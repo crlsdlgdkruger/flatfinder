@@ -1,4 +1,4 @@
-import { LocalStorageService } from "./LocalStoraeService";
+import { LocalStorageService } from "./LocalStorageService";
 import { UserService } from "./UserService";
 
 export class Utils {

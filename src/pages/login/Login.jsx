@@ -7,7 +7,7 @@ import UserContext from '../../context/UserContext';
 
 import { useNavigate } from 'react-router-dom';
 import { Toast } from 'primereact/toast';
-import { LocalStorageService } from '../../services/LocalStoraeService';
+import { LocalStorageService } from '../../services/LocalStorageService';
 import "./login.css"
 
 export const Login = () => {

@@ -8,7 +8,7 @@ import UserContext from "../../context/UserContext"
 import { Password } from "primereact/password"
 import { Button } from "primereact/button"
 import { useNavigate } from "react-router-dom"
-import { LocalStorageService } from "../../services/LocalStoraeService"
+import { LocalStorageService } from "../../services/LocalStorageService"
 
 export const UpdatePassword = () => {
 

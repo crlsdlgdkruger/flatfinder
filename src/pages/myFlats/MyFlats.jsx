@@ -4,7 +4,7 @@ import { AddButton } from "../../components/addButton/AddButton";
 import { Footer } from "../../components/footer/Footer";
 import { Header } from "../../components/header/Header";
 import { User } from "../../models/User";
-import { LocalStorageService } from "../../services/LocalStoraeService";
+import { LocalStorageService } from "../../services/LocalStorageService";
 import "./myFlats.css";
 import { useParams } from "react-router-dom";
 
