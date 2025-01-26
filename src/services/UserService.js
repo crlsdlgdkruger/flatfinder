@@ -10,6 +10,11 @@ export class UserService {
     return Utils.getData(data);
   }
 
+  async getAllUsers() {
+    const data = await getDocs(this.usersCollectionRef);
+    return Utils.getData(data);
+  }
+
   async login(email, password) {
     const q = query(
       this.usersCollectionRef,

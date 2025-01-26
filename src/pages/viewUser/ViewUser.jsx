@@ -5,7 +5,7 @@ import { Header } from "../../components/header/Header";
 import { Footer } from "../../components/footer/Footer";
 import { UserCard } from "../../components/userCard/UserCard";
 import "../pages.css";
-import "./myProfile.css";
+import "./viewUser.css";
 import { LocalStorageService } from "../../services/LocalStoraeService";
 import { User } from "../../models/User";
 import { useParams } from "react-router-dom";
@@ -13,7 +13,7 @@ import { use } from "react";
 import { UserService } from "../../services/UserService";
 
 
-export const MyProfile = () => {
+export const ViewUser = () => {
 
   const [user, setUser] = useState(null);// este usuario es el que se mostrara en el card, no necesariamente al usuario logueado
   const { userId } = useParams(); // id del usuario que se va a mostrar en el card

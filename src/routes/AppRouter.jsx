@@ -1,9 +1,10 @@
 import { Route, Routes } from "react-router-dom";
 import { Home } from "../pages/home/Home";
+import { AllUsers } from "../pages/allUsers/AllUsers";
 import { Login } from "../pages/login/Login";
 import { Register } from "../pages/register/Register";
 import { UserContextProvider } from "../context/UserContext";
-import { MyProfile } from "../pages/myProfile/MyProfile";
+import { ViewUser } from "../pages/viewUser/ViewUser";
 import { NewFlat } from "../pages/newFlat/NewFlat";
 import { MyFlats } from "../pages/myFlats/MyFlats";
 import { Favorites } from "../pages/favorites/Favorites";
@@ -18,9 +19,10 @@ const AppRouter = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Home />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/myProfile/userId/:userId" element={<MyProfile />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/allUsers" element={<AllUsers />} />
+        <Route path="/viewUser/userId/:userId" element={<ViewUser />} />
         <Route path="/newFlat" element={<NewFlat />} />
         <Route path="/myFlats/userId/:userId" element={<MyFlats />} />
         <Route path="/favorites/userId/:userId" element={<Favorites />} />

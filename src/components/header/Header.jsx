@@ -8,7 +8,6 @@ import "./header.css"
 import { LocalStorageService } from "../../services/LocalStoraeService";
 import { User } from "../../models/User";
 export const Header = () => {
-  // const { user } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -29,11 +28,6 @@ export const Header = () => {
       icon: 'pi pi-fw pi-home',
       command: () => navigate("/home")
     },
-    // {
-    //   label: 'New Flat',
-    //   icon: 'pi pi-fw pi-plus',
-    //   command: () => navigate("/newflat")
-    // },
     {
       label: 'My Flats',
       icon: 'pi pi-fw pi-inbox',
@@ -45,6 +39,13 @@ export const Header = () => {
       icon: 'pi pi-fw pi-heart',
       command: () => navigate(`/favorites/userId/${user[0].id}`),
     },
+    ...(user[0]?.role === "admin" ? [
+      {
+        label: 'Users',
+        icon: 'pi pi-fw pi-users',
+        command: () => navigate(`/allUsers`),
+      }
+    ] : []),
     {
       label: 'Profile',
       icon: 'pi pi-fw pi-user',
@@ -52,7 +53,7 @@ export const Header = () => {
         {
           label: 'My Profile',
           icon: 'pi pi-fw pi-user',
-          command: () => navigate(`/myProfile/userId/${user[0].id}`)
+          command: () => navigate(`/viewUser/userId/${user[0].id}`)
         },
         {
           label: 'Update Password',
