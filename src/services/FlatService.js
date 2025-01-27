@@ -87,4 +87,10 @@ export class FlatService {
     });
     return response;
   }
+
+  async countFlatsCreated(userId) {
+    const q = query(this.usersCollectionRef, where("userId", "==", userId));
+    const data = await getDocs(q);
+    return data.docs.length;
+  }
 }

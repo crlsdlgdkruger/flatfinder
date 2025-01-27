@@ -4,22 +4,34 @@ import { DataTable } from "primereact/datatable";
 import { useEffect, useState } from "react";
 import { Utils } from "../../services/Utils";
 import { useNavigate } from "react-router-dom";
+import { FlatService } from "../../services/FlatService";
 
 export const UserList = ({ users }) => {
 
   const [usersDTO, setUsersDTO] = useState([]);
   const navigate = useNavigate();
 
+  const flatService = new FlatService();
+
   useEffect(() => {
-    const formatedUsers = users.map(user => ({
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      role: user.role,
-      age: Utils.calculateAge(user.birthDate),
-    }));
-    setUsersDTO(formatedUsers);
+    const fetchData = async () => {
+      const formatedUsers = await Promise.all(
+        users.map(async (user) => ({
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          role: user.role,
+          age: Utils.calculateAge(user.birthDate),
+          countFlatsCreated: await flatService.countFlatsCreated(user.id),
+        }))
+      );
+      setUsersDTO(formatedUsers);
+    };
+
+    if (users.length > 0) {
+      fetchData();
+    }
   }, [users]);
 
   // useEffect(() => { console.log('usersDTO', usersDTO) }, [usersDTO]);
@@ -53,6 +65,7 @@ export const UserList = ({ users }) => {
           <Column field="email" header="Email" />
           <Column field="role" header="Role" />
           <Column field="age" header="Age" />
+          <Column field="countFlatsCreated" header="Flats Created" />
           <Column body={actionBodyTemplate} header="Options" />
         </DataTable>}
     </div>
