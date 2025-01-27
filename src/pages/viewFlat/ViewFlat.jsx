@@ -24,6 +24,7 @@ export const ViewFlat = () => {
   useEffect(() => {
     const localStorageService = new LocalStorageService();
     if (!localStorageService.isAuthenticated()) {
+      localStorageService.logout();
       window.location.href = "/login";
     } else {
       setUser(localStorageService.getLoggedUser());

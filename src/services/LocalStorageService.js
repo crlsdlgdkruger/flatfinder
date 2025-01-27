@@ -14,4 +14,12 @@ export class LocalStorageService {
   isAuthenticated() {
     return localStorage.getItem('loggedUser') !== null ? true : false;
   }
+
+  isAdmin() {
+    return this.getLoggedUser().role === 'admin' ? true : false;
+  }
+
+  logout() {
+    localStorage.removeItem('loggedUser');
+  }
 }

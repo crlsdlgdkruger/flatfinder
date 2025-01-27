@@ -4,7 +4,6 @@ import { Footer } from "../../components/footer/Footer"
 // import { UpdatePasswordForm } from "../../components/updatePasswordForm/UpdatePasswordForm"
 import { useContext, useEffect, useRef, useState } from "react"
 import { UserService } from "../../services/UserService"
-import UserContext from "../../context/UserContext"
 import { Password } from "primereact/password"
 import { Button } from "primereact/button"
 import { useNavigate } from "react-router-dom"
@@ -31,6 +30,7 @@ export const UpdatePassword = () => {
   useEffect(() => {
     const localStorageService = new LocalStorageService();
     if (!localStorageService.isAuthenticated()) {
+      localStorageService.logout();
       window.location.href = "/login";
     } else {
       setUser(localStorageService.getLoggedUser());

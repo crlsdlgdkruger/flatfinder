@@ -13,6 +13,7 @@ export const AllUsers = () => {
   useEffect(() => {
     const localStorageService = new LocalStorageService();
     if (!localStorageService.isAuthenticated() && localStorageService.getLoggedUser().role !== "admin") {
+      localStorageService.logout();
       window.location.href = "/login";
     } else {
       setUserLogged(localStorageService.getLoggedUser());

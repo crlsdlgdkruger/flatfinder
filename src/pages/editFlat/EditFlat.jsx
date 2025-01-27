@@ -26,6 +26,7 @@ export const EditFlat = () => {
   useEffect(() => {
     const localStorageService = new LocalStorageService();
     if (!localStorageService.isAuthenticated()) {
+      localStorageService.logout();
       window.location.href = "/login";
     }
   }, []);

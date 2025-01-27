@@ -16,7 +16,7 @@ import { use } from "react";
 export const EditUser = () => {
 
   const [user, setUser] = useState(null);
-  const [userLogged, setUserLogged] = useState(new User());
+  const [userLogged, setUserLogged] = useState(null);
   const toast = useRef(null);
   const navigate = useNavigate();
   const { userId } = useParams();
@@ -27,6 +27,7 @@ export const EditUser = () => {
 
   useEffect(() => {
     if (!localStorageService.isAuthenticated()) {
+      localStorageService.logout();
       window.location.href = "/login";
     }
     setUserLogged(localStorageService.getLoggedUser());
@@ -37,6 +38,16 @@ export const EditUser = () => {
       fetchUser();
     }
   }, []);
+
+  useEffect(() => {
+    console.log('USER', user);
+    if (user) {
+      if (user[0]?.id !== userLogged[0]?.id && userLogged[0]?.role !== "admin") {
+        localStorageService.logout();
+        window.location.href = "/login";
+      }
+    }
+  }, [user]);
 
   const fetchUser = async () => {
     let userAux = await userService.getUserById(userId);

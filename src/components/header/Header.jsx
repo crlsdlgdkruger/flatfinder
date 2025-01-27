@@ -12,10 +12,11 @@ export const Header = () => {
   const navigate = useNavigate();
 
   const [user, setUser] = useState(new User());
+  const localStorageService = new LocalStorageService();
 
   useEffect(() => {
-    const localStorageService = new LocalStorageService();
     if (!localStorageService.isAuthenticated()) {
+      localStorageService.logout();
       window.location.href = "/login";
     } else {
       setUser(localStorageService.getLoggedUser());
@@ -63,7 +64,10 @@ export const Header = () => {
         {
           label: 'Logout',
           icon: 'pi pi-fw pi-power-off',
-          command: () => window.location.href = "/login"
+          command: () => {
+            localStorageService.logout();
+            window.location.href = "/login";
+          }
         }
       ]
     }
