@@ -16,7 +16,8 @@ export class LocalStorageService {
   }
 
   isAdmin() {
-    return this.getLoggedUser().role === 'admin' ? true : false;
+    if (!this.isAuthenticated()) return false;
+    return this.getLoggedUser()[0].role === 'admin' ? true : false;
   }
 
   logout() {

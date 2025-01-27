@@ -40,9 +40,12 @@ export const EditUser = () => {
   }, []);
 
   useEffect(() => {
-    console.log('USER', user);
+    // console.log('USER', user);
+    console.log('userLogged', userLogged);
+    console.log('user', user);
     if (user) {
-      if (user[0]?.id !== userLogged[0]?.id && userLogged[0]?.role !== "admin") {
+      if (user?.id !== userLogged[0]?.id && userLogged[0]?.role !== "admin") {
+
         localStorageService.logout();
         window.location.href = "/login";
       }

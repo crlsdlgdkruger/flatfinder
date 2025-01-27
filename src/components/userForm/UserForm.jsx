@@ -2,12 +2,15 @@ import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
+import { RadioButton } from "primereact/radiobutton";
 import { useEffect, useState } from "react";
+import { LocalStorageService } from "../../services/LocalStorageService";
 
 export const UserForm = ({ user = {}, setUser, action, buttonAction }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [userToEdit, setUserToEdit] = useState(user);
+  const [isUserLoggedAdmin, setIsUserLoggedAdmin] = useState(false);
 
   const submitUser = (e) => {
     e.preventDefault();
@@ -19,6 +22,14 @@ export const UserForm = ({ user = {}, setUser, action, buttonAction }) => {
   useEffect(() => {
     console.log('User to edit', userToEdit, 'Errors', errors);
   }, [userToEdit, errors]);
+
+  useEffect(() => {
+    const localStorageService = new LocalStorageService();
+    console.log('Is UserLogged admin', localStorageService.isAdmin());
+    if (user) {
+      setIsUserLoggedAdmin(localStorageService.isAdmin());
+    }
+  }, []);
 
 
   const validate = () => {
@@ -87,6 +98,22 @@ export const UserForm = ({ user = {}, setUser, action, buttonAction }) => {
             <label htmlFor="confirm-password">Confirm Password</label>
             <Password id="confirm-password" value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value) }} type='password' toggleMask />
             {errors.confirmPassword && <small className="p-error">{errors.confirmPassword}</small>}
+          </div>}
+
+        {/* role input */}
+        {isUserLoggedAdmin &&
+          <div className="role-input-container">
+            <div>
+              <label htmlFor="role-user">Role</label>
+            </div>
+            <div>
+              <RadioButton inputId="role-user" name="role" value="user" onChange={(e) => { setUserToEdit({ ...userToEdit, role: e.value }) }} checked={userToEdit.role === "user"} />
+              <label htmlFor="role-user">User</label>
+            </div>
+            <div>
+              <RadioButton inputId="role-admin" name="role" value="admin" onChange={(e) => { setUserToEdit({ ...userToEdit, role: e.value }) }} checked={userToEdit.role === "admin"} />
+              <label htmlFor="role-admin">Admin</label>
+            </div>
           </div>}
 
         {/* submit button  */}
