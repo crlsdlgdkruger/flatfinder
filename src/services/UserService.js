@@ -1,6 +1,7 @@
 import { db } from "../config/firebase";
 import { collection, getDocs, addDoc, query, where, updateDoc, doc, getDoc } from "firebase/firestore";
 import { Utils } from "./Utils";
+import { FlatService } from "./FlatService";
 export class UserService {
   constructor() {
     this.usersCollectionRef = collection(db, "users");
@@ -29,11 +30,30 @@ export class UserService {
     }
     console.log('conditions', conditions);
     const setQuery = query(this.usersCollectionRef, ...conditions);
-    console.log('setQuery', setQuery);
     const data = await getDocs(setQuery);
     const result = Utils.getData(data);
     console.log('result', result);
-    return result;
+    const flatService = new FlatService();
+    let resultDTO = await Promise.all(
+      result.map(async (user) => ({
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        role: user.role,
+        birthDate: user.birthDate,
+        countFlatsCreated: await flatService.countFlatsCreated(user.id),
+      }))
+    )
+    if (filters.minCountFlatsCreated) {
+      resultDTO = resultDTO.filter(user => user.countFlatsCreated >= filters.minCountFlatsCreated);
+    }
+    if (filters.maxCountFlatsCreated) {
+      resultDTO = resultDTO.filter(user => user.countFlatsCreated <= filters.maxCountFlatsCreated);
+    }
+
+    console.log('resultDTO', resultDTO);
+    return resultDTO;
   }
 
   async getAllUsers() {

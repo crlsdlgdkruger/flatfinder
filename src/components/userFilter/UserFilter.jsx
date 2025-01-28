@@ -12,7 +12,7 @@ export const UserFilter = ({ filters, setFilters }) => {
   const [role, setRole] = useState(filters.role || null);
 
   const roleOptions = [
-    { label: 'All', value: null },
+    { label: 'All', value: 0 },
     { label: 'Admin', value: 'admin' },
     { label: 'User', value: 'user' },
   ];
