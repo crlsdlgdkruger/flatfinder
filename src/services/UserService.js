@@ -5,9 +5,35 @@ export class UserService {
   constructor() {
     this.usersCollectionRef = collection(db, "users");
   }
-  async getUsers() {
-    const data = await getDocs(this.usersCollectionRef);
-    return Utils.getData(data);
+  async getUsers(filters) {
+    console.log('filters', filters);
+    const conditions = [];
+    let birthDate;
+    let countFlatsCreated;
+    if (filters.firstName) {
+      const startText = filters.firstName;
+      const endText = filters.firstName + '\uf8ff';
+      conditions.push(where("firstName", ">=", startText));
+      conditions.push(where("firstName", "<=", endText));
+    }
+    if (filters.role) {
+      conditions.push(where("role", "==", filters.role));
+    }
+    if (filters.minAge) {
+      birthDate = Utils.calculateBirthDate(filters.minAge);
+      conditions.push(where("birthDate", "<=", birthDate));
+    }
+    if (filters.maxAge) {
+      birthDate = Utils.calculateBirthDate(filters.maxAge);
+      conditions.push(where("birthDate", ">=", birthDate));
+    }
+    console.log('conditions', conditions);
+    const setQuery = query(this.usersCollectionRef, ...conditions);
+    console.log('setQuery', setQuery);
+    const data = await getDocs(setQuery);
+    const result = Utils.getData(data);
+    console.log('result', result);
+    return result;
   }
 
   async getAllUsers() {
@@ -21,6 +47,7 @@ export class UserService {
       where("email", "==", email),
       where("password", "==", password)
     );
+    console.log('q', q);
     const data = await getDocs(q);
     return Utils.getData(data);
   }

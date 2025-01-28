@@ -1,3 +1,4 @@
+import { Timestamp } from "firebase/firestore";
 import { LocalStorageService } from "./LocalStorageService";
 import { UserService } from "./UserService";
 
@@ -22,6 +23,13 @@ export class Utils {
       age--;
     }
     return age;
+  }
+
+  static calculateBirthDate = (age) => {
+    const today = new Date();
+    const birthDate = new Date(today.getFullYear() - age, today.getMonth(), today.getDate());
+    Timestamp.fromDate(birthDate);
+    return birthDate;
   }
 
   static toggleFavorite = async (flat) => {

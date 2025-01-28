@@ -5,10 +5,18 @@ import { UserList } from "../../components/userList/UserList"
 import { User } from "../../models/User";
 import { LocalStorageService } from "../../services/LocalStorageService";
 import { UserService } from "../../services/UserService";
+import { UserFilter } from "../../components/userFilter/UserFilter";
 
 export const AllUsers = () => {
   const [userLogged, setUserLogged] = useState(new User());
   const [users, setUsers] = useState([]);
+  const [filters, setFilters] = useState({
+    minAge: null,
+    maxAge: null,
+    minCountFlatsCreated: null,
+    maxCountFlatsCreated: null,
+    role: null
+  });
 
   useEffect(() => {
     const localStorageService = new LocalStorageService();
@@ -22,11 +30,12 @@ export const AllUsers = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [filters]);
 
   const fetchUsers = async () => {
     const service = new UserService();
-    const users = await service.getUsers();
+    const users = await service.getUsers(filters);
+    setUsers([]);
     setUsers(users);
   };
 
@@ -41,6 +50,8 @@ export const AllUsers = () => {
         <div className="content-wrapper">
           <main>
             <h3>All Users</h3>
+            <UserFilter filters={filters} setFilters={setFilters} />
+            {/* <UserList users={users} filters={filters} setFilters={setFilters} /> */}
             <UserList users={users} />
           </main>
         </div>

@@ -1,11 +1,11 @@
-/* .filter-container{
+.filter-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.filter-age{
+.filter-age {
   display: flex;
   flex-direction: row;
   gap: 3px;
@@ -13,6 +13,6 @@
   width: 170px;
 }
 
-.filter-label{
-  font-size: small;
-} */
+.filter-label {
+  /* font-size: larger; */
+}
