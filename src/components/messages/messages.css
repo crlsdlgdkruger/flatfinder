@@ -1,0 +1,25 @@
+.messages-list-container{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.messages-item{
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  border: 1px solid black;
+  padding: 1rem;
+}
+
+.messages-item label{
+  font-weight: bold;
+  color: #808080;
+  font-size: 13px;
+}
+
+.messages-item p{
+  margin: 0;
+  font-size: large;
+}

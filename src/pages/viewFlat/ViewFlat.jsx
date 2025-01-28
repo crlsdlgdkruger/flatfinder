@@ -11,6 +11,7 @@ import { User } from "../../models/User";
 import { LocalStorageService } from "../../services/LocalStorageService";
 import { Flat } from "../../models/Flat";
 import { FlatService } from "../../services/FlatService";
+import { Messages } from "../../components/messages/Messages";
 
 export const ViewFlat = () => {
 
@@ -50,6 +51,7 @@ export const ViewFlat = () => {
         <main>
           <div className="flat-card-wrapper">
             {user && flat && <FlatCard flat={flat} userId={user[0].id} />}
+            {user && flat && <Messages flatId={flat.id} senderId={user[0].id} receiverId={flat.userId} />}
           </div>
         </main>
       </div>

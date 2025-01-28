@@ -1,8 +1,9 @@
 export class Message {
-  constructor(creationTime, content, sender, receiver) {
+  constructor(creationTime, content, senderId, receiverId, flatId) {
     this.creationTime = creationTime
     this.content = content
-    this.sender = sender
-    this.receiver = receiver
+    this.senderId = senderId
+    this.receiverId = receiverId
+    this.flatId = flatId
   }
 }

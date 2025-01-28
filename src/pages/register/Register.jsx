@@ -21,7 +21,6 @@ export const Register = () => {
       }, 3000);
     } else {
       toast.current.show({ severity: 'error', summary: 'Error', detail: 'Email already exists', life: 3000 });
-
     }
   }
 

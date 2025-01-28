@@ -40,7 +40,7 @@ export const Header = () => {
       icon: 'pi pi-fw pi-heart',
       command: () => navigate(`/favorites/userId/${user[0].id}`),
     },
-    ...(user[0]?.role === "admin" ? [
+    ...(localStorageService.isAdmin() ? [
       {
         label: 'Users',
         icon: 'pi pi-fw pi-users',
