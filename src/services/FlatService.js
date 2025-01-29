@@ -7,17 +7,63 @@ export class FlatService {
     this.usersCollectionRef = collection(db, "flats");
   }
 
-  async getFlats() {
-    const data = await getDocs(this.usersCollectionRef);
-    return data.docs.map((doc) => {
-      const flat = doc.data();
+  async getFlats(filters, sortBy, ascDesc) {
+
+    const conditions = [];
+    if (filters.city) {
+      const startText = filters.city.toLowerCase();
+      const endText = startText + '\uf8ff';
+      conditions.push(where("city", ">=", startText));
+      conditions.push(where("city", "<=", endText));
+    }
+    if (filters.minArea) {
+      conditions.push(where("areaSize", ">=", filters.minArea));
+    }
+    if (filters.maxArea) {
+      conditions.push(where("areaSize", "<=", filters.maxArea));
+    }
+    if (filters.minRentPrice) {
+      conditions.push(where("rentPrice", ">=", filters.minRentPrice));
+    }
+    if (filters.maxRentPrice) {
+      conditions.push(where("rentPrice", "<=", filters.maxRentPrice));
+    }
+    console.log('conditions', conditions);
+    const q = query(this.usersCollectionRef, ...conditions);
+    const data = await getDocs(q);
+    const result = Utils.getData(data);
+
+    if (ascDesc === "asc") {
+      result.sort((a, b) => {
+        if (a[sortBy] < b[sortBy]) {
+          return -1;
+        }
+        if (a[sortBy] > b[sortBy]) {
+          return 1;
+        }
+        return 0;
+      });
+    } else {
+      result.sort((a, b) => {
+        if (a[sortBy] < b[sortBy]) {
+          return 1;
+        }
+        if (a[sortBy] > b[sortBy]) {
+          return -1;
+        }
+        return 0;
+      });
+    }
+
+    result.forEach(flat => {
       if (flat.dateAvailable && flat.dateAvailable.seconds) {
         const date = new Date(flat.dateAvailable.seconds * 1000);
         flat.dateAvailable = date.toISOString().split("T")[0];
       }
-      return { ...flat, id: doc.id };
     });
+    return result;
   }
+
 
   async getFlatsByIds(flatIds) {
     console.log('getFlatsByIds', flatIds);
@@ -43,8 +89,15 @@ export class FlatService {
   }
 
   async createFlat(flat) {
+    flat.city = flat.city.toLowerCase();
     if (flat.dateAvailable) {
       flat.dateAvailable = new Date(flat.dateAvailable);
+    }
+    if (flat.areaSize) {
+      flat.areaSize = Number(flat.areaSize);
+    }
+    if (flat.rentPrice) {
+      flat.rentPrice = Number(flat.rentPrice);
     }
     return await addDoc(this.usersCollectionRef, flat);
   }
@@ -53,6 +106,12 @@ export class FlatService {
     console.log('updateFlat', flat);
     if (flat.dateAvailable) {
       flat.dateAvailable = new Date(flat.dateAvailable);
+    }
+    if (flat.areaSize) {
+      flat.areaSize = Number(flat.areaSize);
+    }
+    if (flat.rentPrice) {
+      flat.rentPrice = Number(flat.rentPrice);
     }
     const docRef = doc(db, "flats", flat.id);
     return await updateDoc(docRef, flat);

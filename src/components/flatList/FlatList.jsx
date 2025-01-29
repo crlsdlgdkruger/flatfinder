@@ -10,6 +10,8 @@ import { InputText } from 'primereact/inputtext';
 import { InputNumber } from 'primereact/inputnumber';
 import { LocalStorageService } from '../../services/LocalStorageService';
 import { Utils } from '../../services/Utils';
+import { use } from 'react';
+import { Dropdown } from 'primereact/dropdown';
 
 export const FlatList = ({ favoriteFlats = [], userId }) => {
 
@@ -19,9 +21,17 @@ export const FlatList = ({ favoriteFlats = [], userId }) => {
   const [maxRentPriceFilter, setMaxRentPriceFilter] = useState(0);
   const [minAreaFilter, setMinAreaFilter] = useState(0);
   const [maxAreaFilter, setMaxAreaFilter] = useState(0);
+  const [filteredFlats, setFilteredFlats] = useState([]);
+  const [filters, setFilters] = useState({});
+  const [sortBy, setSortBy] = useState("city");
+  const [ascDesc, setAscDesc] = useState("asc");
   const navigate = useNavigate();
 
-
+  const sortOptions = [
+    { label: 'City', value: 'city' },
+    { label: 'Area', value: 'areaSize' },
+    { label: 'Price', value: 'rentPrice' },
+  ];
 
   useEffect(() => {
     if (Object.keys(favoriteFlats).length === 0 && !userId) {
@@ -31,27 +41,31 @@ export const FlatList = ({ favoriteFlats = [], userId }) => {
     } else {
       fetchFavoriteFlats();
     }
-  }, []);
+  }, [filters, sortBy, ascDesc]);
 
   useEffect(() => {
     console.log('flats', flats, userId);
   }, [flats, userId]);
 
+  useEffect(() => {
+    console.log('filters', filters);
+  }, [filters]);
+
   const fetchFlats = async () => {
     const service = new FlatService();
-    const data = await service.getFlats();
+    const data = await service.getFlats(filters, sortBy, ascDesc);
     setFlats(data);
   };
 
   const fetchFavoriteFlats = async () => {
     const service = new FlatService();
-    const data = await service.getFlatsByIds(favoriteFlats);
+    const data = await service.getFlatsByIds(favoriteFlats, filters, sortBy, ascDesc);
     setFlats(data);
   };
 
   const fetchMyFlats = async () => {
     const service = new FlatService();
-    const data = await service.getFlatsByUserId(userId);
+    const data = await service.getFlatsByUserId(userId, filters, sortBy, ascDesc);
     console.log('data', data)
     setFlats(data);
   };
@@ -169,21 +183,42 @@ export const FlatList = ({ favoriteFlats = [], userId }) => {
     );
   };
 
-  const filteredFlats = flats.filter((flat) => {
-    const matchesCity = cityFilter
-      ? flat.city?.toLowerCase().includes(cityFilter.toLowerCase())
-      : true;
+  // const filteredFlats = flats.filter((flat) => {
+  //   const matchesCity = cityFilter
+  //     ? flat.city?.toLowerCase().includes(cityFilter.toLowerCase())
+  //     : true;
 
-    const matchesRentPrice =
-      (!minRentPriceFilter || flat.rentPrice >= minRentPriceFilter) &&
-      (!maxRentPriceFilter || flat.rentPrice <= maxRentPriceFilter);
+  //   const matchesRentPrice =
+  //     (!minRentPriceFilter || flat.rentPrice >= minRentPriceFilter) &&
+  //     (!maxRentPriceFilter || flat.rentPrice <= maxRentPriceFilter);
 
-    const matchesArea =
-      (!minAreaFilter || flat.areaSize >= minAreaFilter) &&
-      (!maxAreaFilter || flat.areaSize <= maxAreaFilter);
+  //   const matchesArea =
+  //     (!minAreaFilter || flat.areaSize >= minAreaFilter) &&
+  //     (!maxAreaFilter || flat.areaSize <= maxAreaFilter);
 
-    return matchesCity && matchesRentPrice && matchesArea;
-  });
+  //   return matchesCity && matchesRentPrice && matchesArea;
+  // });
+
+  const submitFilters = (e) => {
+    e.preventDefault();
+    setFilters({
+      ...filters,
+      city: cityFilter,
+      minArea: minAreaFilter,
+      maxArea: maxAreaFilter,
+      minRentPrice: minRentPriceFilter,
+      maxRentPrice: maxRentPriceFilter,
+    });
+  };
+
+  const resetFilters = () => {
+    setCityFilter('');
+    setMinRentPriceFilter(null);
+    setMaxRentPriceFilter(null);
+    setMinAreaFilter(null);
+    setMaxAreaFilter(null);
+    setFilters({});
+  };
 
   const formatCurrency = (value) => {
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
@@ -212,14 +247,49 @@ export const FlatList = ({ favoriteFlats = [], userId }) => {
   return (
     <div className="flat-list-container">
       <h4>Flat List</h4>
+      <div>
+        <form onSubmit={(e) => { submitFilters(e) }}>
+          <div className='flats-filters'>
+            <div className='city-filter'>
+              <label>Filter by city</label>
+              <InputText value={cityFilter} onChange={(e) => setCityFilter(e.target.value)} placeholder="Search by city" />
+            </div>
+            <div className='area-filter'>
+              <label>Filter by area</label>
+              <InputNumber value={minAreaFilter} onValueChange={(e) => setMinAreaFilter(e.value)} placeholder="Min area" />
+              <InputNumber value={maxAreaFilter} onValueChange={(e) => setMaxAreaFilter(e.value)} placeholder="Max area" />
+            </div>
+            <div className='rent-price-filter'>
+              <label>Filter by rent price</label>
+              <InputNumber value={minRentPriceFilter} onValueChange={(e) => setMinRentPriceFilter(e.value)} placeholder="Min price" mode="currency" currency="USD" locale="en-US" />
+              <InputNumber value={maxRentPriceFilter} onValueChange={(e) => setMaxRentPriceFilter(e.value)} placeholder="Max price" mode="currency" currency="USD" locale="en-US" />
+            </div>
+            <div>
+              <Button type="submit" icon="pi pi-search" className="p-button-sm p-button-info" />
+              <Button type="button" icon="pi pi-filter-slash" className="p-button-sm p-button-info" outlined onClick={() => resetFilters()} />
+            </div>
+          </div>
+        </form>
+        <form onSubmit={(e) => { submitFilters(e) }}>
+          <div>
+            <Dropdown options={sortOptions} value={sortBy} onChange={(e) => setSortBy(e.target.value)} />
+            {ascDesc === "asc" ?
+              <Button icon="pi pi-sort-amount-up" text severity="info" aria-label="Cancel" onClick={() => setAscDesc("desc")} /> :
+              <Button icon="pi pi-sort-amount-down" text severity="info" aria-label="Cancel" onClick={() => setAscDesc("asc")} />}
+          </div>
+        </form>
+      </div>
       <div className="flat-list">
-        <DataTable value={filteredFlats} scrollable scrollDirection="horizontal">
-          <Column field="city" header="City" sortable filter filterElement={cityFilterElement} />
+        <DataTable value={flats} scrollable scrollDirection="horizontal">
+          {/* <Column field="city" header="City" sortable filter filterElement={cityFilterElement} /> */}
+          <Column field="city" header="City" />
           <Column field="streetName" header="Street Name" />
           <Column field="streetNumber" header="Street Number" />
-          <Column field="areaSize" header="Area Size" sortable filter filterElement={areaFilterElement} body={areaBodyTemplate} />
+          {/* <Column field="areaSize" header="Area Size" sortable filter filterElement={areaFilterElement} body={areaBodyTemplate} /> */}
+          <Column field="areaSize" header="Area Size" body={areaBodyTemplate} />
           <Column field="yearBuilt" header="Year Built" />
-          <Column field="rentPrice" header="Rent Price" sortable filter filterElement={rentPriceFilterElement} body={rentPriceBodyTemplate} />
+          {/* <Column field="rentPrice" header="Rent Price" sortable filter filterElement={rentPriceFilterElement} body={rentPriceBodyTemplate} /> */}
+          <Column field="rentPrice" header="Rent Price" body={rentPriceBodyTemplate} />
           <Column field="dateAvailable" header="Date Available" />
           <Column field="hasAC" header="Has AC" body={hasACBodyTemplate} />
           <Column

@@ -10,7 +10,6 @@ export class UserService {
     console.log('filters', filters);
     const conditions = [];
     let birthDate;
-    let countFlatsCreated;
     if (filters.firstName) {
       const startText = filters.firstName;
       const endText = filters.firstName + '\uf8ff';
