@@ -5,20 +5,12 @@ import { useEffect, useState } from "react";
 import { Utils } from "../../services/Utils";
 import { useNavigate } from "react-router-dom";
 import { FlatService } from "../../services/FlatService";
-import { InputNumber } from "primereact/inputnumber";
 import "./userList.css";
 
 export const UserList = ({ users, filters, setFilters }) => {
 
   const [usersDTO, setUsersDTO] = useState([]);
   const navigate = useNavigate();
-  // const [filters, setFilters] = useState({
-  //   minAge: null,
-  //   maxAge: null,
-  //   minCountFlatsCreated: null,
-  //   maxCountFlatsCreated: null,
-  //   typeUser: null
-  // });
 
   const flatService = new FlatService();
 
@@ -45,18 +37,6 @@ export const UserList = ({ users, filters, setFilters }) => {
     }
   }, [users]);
 
-  // const ageFilterTemplate = () => {
-  //   return (
-  //     <div className="filter-container">
-  //       <label className="filter-label">Filter by age</label>
-  //       <form className="filter-age">
-  //         <InputNumber value={filters.minAge} onChange={(e) => setFilters({ ...filters, minAge: e.value })} placeholder="Min" />
-  //         <InputNumber value={filters.maxAge} onChange={(e) => setFilters({ ...filters, maxAge: e.value })} placeholder="Max" />
-  //         {/* <Button type="submit" icon="pi pi-filter" className="p-button-sm p-button-info" /> */}
-  //       </form>
-  //     </div>
-  //   );
-  // };
 
   const actionBodyTemplate = (rowData) => {
     return (
@@ -85,7 +65,6 @@ export const UserList = ({ users, filters, setFilters }) => {
           <Column field="lastName" header="Last Name" />
           <Column field="email" header="Email" />
           <Column field="role" header="Role" />
-          {/* <Column field="age" header="Age" filterField="age" filter filterElement={ageFilterTemplate} showFilterMenu={false} showClearButton={false} /> */}
           <Column field="age" header="Age" filterField="age" />
           <Column field="countFlatsCreated" header="Flats Created" />
           <Column body={actionBodyTemplate} header="Options" />

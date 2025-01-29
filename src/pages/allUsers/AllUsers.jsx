@@ -6,10 +6,14 @@ import { User } from "../../models/User";
 import { LocalStorageService } from "../../services/LocalStorageService";
 import { UserService } from "../../services/UserService";
 import { UserFilter } from "../../components/userFilter/UserFilter";
+import { Dropdown } from "primereact/dropdown";
+import { Button } from "primereact/button";
 
 export const AllUsers = () => {
   const [userLogged, setUserLogged] = useState(new User());
   const [users, setUsers] = useState([]);
+  const [sortBy, setSortBy] = useState("firstName");
+  const [ascDesc, setAscDesc] = useState("asc");
   const [filters, setFilters] = useState({
     minAge: null,
     maxAge: null,
@@ -17,6 +21,12 @@ export const AllUsers = () => {
     maxCountFlatsCreated: null,
     role: null
   });
+  const sortOptions = [
+    { label: "First Name", value: "firstName" },
+    { label: "Last Name", value: "lastName" },
+    { label: "Flats Created", value: "countFlatsCreated" },
+  ];
+
 
   useEffect(() => {
     const localStorageService = new LocalStorageService();
@@ -30,11 +40,12 @@ export const AllUsers = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, [filters]);
+  }, [filters, sortBy, ascDesc]);
+
 
   const fetchUsers = async () => {
     const service = new UserService();
-    const users = await service.getUsers(filters);
+    const users = await service.getUsers(filters, sortBy, ascDesc);
     setUsers([]);
     setUsers(users);
   };
@@ -51,7 +62,12 @@ export const AllUsers = () => {
           <main>
             <h3>All Users</h3>
             <UserFilter filters={filters} setFilters={setFilters} />
-            {/* <UserList users={users} filters={filters} setFilters={setFilters} /> */}
+            <div>
+              <Dropdown options={sortOptions} onChange={(e) => setSortBy(e.target.value)} value={sortBy} />
+              {ascDesc === "asc" ?
+                <Button icon="pi pi-sort-amount-up" text severity="info" aria-label="Cancel" onClick={() => setAscDesc("desc")} /> :
+                <Button icon="pi pi-sort-amount-down" text severity="info" aria-label="Cancel" onClick={() => setAscDesc("asc")} />}
+            </div>
             <UserList users={users} />
           </main>
         </div>

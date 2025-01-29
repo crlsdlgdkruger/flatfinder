@@ -6,7 +6,7 @@ export class UserService {
   constructor() {
     this.usersCollectionRef = collection(db, "users");
   }
-  async getUsers(filters) {
+  async getUsers(filters, sortBy, ascDesc) {
     console.log('filters', filters);
     const conditions = [];
     let birthDate;
@@ -51,7 +51,31 @@ export class UserService {
     if (filters.maxCountFlatsCreated) {
       resultDTO = resultDTO.filter(user => user.countFlatsCreated <= filters.maxCountFlatsCreated);
     }
-
+    if (ascDesc === 'asc') {
+      if (sortBy) {
+        resultDTO.sort((a, b) => {
+          if (a[sortBy] < b[sortBy]) {
+            return -1;
+          }
+          if (a[sortBy] > b[sortBy]) {
+            return 1;
+          }
+          return 0;
+        });
+      }
+    } else {
+      if (sortBy) {
+        resultDTO.sort((a, b) => {
+          if (a[sortBy] > b[sortBy]) {
+            return -1;
+          }
+          if (a[sortBy] < b[sortBy]) {
+            return 1;
+          }
+          return 0;
+        });
+      }
+    }
     console.log('resultDTO', resultDTO);
     return resultDTO;
   }
