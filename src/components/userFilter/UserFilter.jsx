@@ -1,8 +1,8 @@
 import { Button } from "primereact/button";
 import { InputNumber } from "primereact/inputnumber";
 import { useState } from "react";
-import './userFilter.css'
 import { Dropdown } from "primereact/dropdown";
+import './userFilter.css'
 
 export const UserFilter = ({ filters, setFilters }) => {
   const [minCountFlatsCreated, setMinCountFlatsCreated] = useState(filters.minCountFlatsCreated || null);
@@ -36,22 +36,26 @@ export const UserFilter = ({ filters, setFilters }) => {
       <form className="filter-form" onSubmit={submitFilter}>
         <div className="filter-role-container">
           <label className="filter-label">Filter by role</label>
-          <Dropdown value={role} onChange={(e) => setRole(e.target.value)} className="w-full md:w-14rem" options={roleOptions} placeholder="Select a role">
+          <Dropdown value={role} onChange={(e) => setRole(e.target.value)} className="dropdown-role-filter" options={roleOptions} placeholder="Select a role">
           </Dropdown>
         </div>
         <div className="filter-countFlatsCreated-container">
           <label className="filter-label">Filter by count flats created</label>
-          <InputNumber value={minCountFlatsCreated} onChange={(e) => setMinCountFlatsCreated(e.value)} placeholder="Min" />
-          <InputNumber value={maxCountFlatsCreated} onChange={(e) => setMaxCountFlatsCreated(e.value)} placeholder="Max" />
+          <div className="input-container">
+            <InputNumber className="input-number-filter" value={minCountFlatsCreated} onChange={(e) => setMinCountFlatsCreated(e.value)} placeholder="Min" />
+            <InputNumber className="input-number-filter" value={maxCountFlatsCreated} onChange={(e) => setMaxCountFlatsCreated(e.value)} placeholder="Max" />
+          </div>
         </div>
         <div className="filter-age-container">
           <label className="filter-label">Filter by age</label>
-          <InputNumber value={minAge} onChange={(e) => setMinAge(e.value)} placeholder="Min" />
-          <InputNumber value={maxAge} onChange={(e) => setMaxAge(e.value)} placeholder="Max" />
+          <div className="input-container">
+            <InputNumber className="input-number-filter" value={minAge} onChange={(e) => setMinAge(e.value)} placeholder="Min" />
+            <InputNumber className="input-number-filter" value={maxAge} onChange={(e) => setMaxAge(e.value)} placeholder="Max" />
+          </div>
         </div>
-        <div className="filter-buttons">
-          <Button type="submit" icon="pi pi-search" className="p-button-sm p-button-info" />
-          <Button type="button" icon="pi pi-filter-slash" className="p-button-sm p-button-info" outlined onClick={() => resetFilters()} />
+        <div className="filter-buttons-container">
+          <Button type="submit" icon="pi pi-search" className="filter-buttons p-button-info" />
+          <Button type="button" icon="pi pi-filter-slash" className="filter-buttons p-button-info" outlined onClick={() => resetFilters()} />
         </div>
       </form>
     </div>
