@@ -26,7 +26,7 @@ export const Home = () => {
 
   return (
     <div className="page-wrapper">
-      <div className="header-wrapper glass-background">
+      <div className="header-wrapper">
         <header>
           <Header />
         </header>

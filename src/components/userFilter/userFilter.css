@@ -39,6 +39,23 @@
   height: 45px;
 }
 
+.button-filter-clear{
+  color: #10181b;
+}
+.button-filter-search {
+  background-color: #10181b;
+}
+
+.button-filter-clear:hover {
+  color: black;
+  transition: all 0.2s ease-in-out;
+}
+
+.button-filter-search:hover {
+  background-color: black;
+  transition: all 0.2s ease-in-out;
+}
+
 .dropdown-role-filter{
   width: 100%;
 }

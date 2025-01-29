@@ -34,28 +34,28 @@ export const UserFilter = ({ filters, setFilters }) => {
   return (
     <div className="filter-container">
       <form className="filter-form" onSubmit={submitFilter}>
-        <div className="filter-role-container">
+        <div className="filter-role-container glass-background">
           <label className="filter-label">Filter by role</label>
           <Dropdown value={role} onChange={(e) => setRole(e.target.value)} className="dropdown-role-filter" options={roleOptions} placeholder="Select a role">
           </Dropdown>
         </div>
-        <div className="filter-countFlatsCreated-container">
+        <div className="filter-countFlatsCreated-container glass-background">
           <label className="filter-label">Filter by count flats created</label>
           <div className="input-container">
             <InputNumber className="input-number-filter" value={minCountFlatsCreated} onChange={(e) => setMinCountFlatsCreated(e.value)} placeholder="Min" />
             <InputNumber className="input-number-filter" value={maxCountFlatsCreated} onChange={(e) => setMaxCountFlatsCreated(e.value)} placeholder="Max" />
           </div>
         </div>
-        <div className="filter-age-container">
+        <div className="filter-age-container glass-background">
           <label className="filter-label">Filter by age</label>
           <div className="input-container">
             <InputNumber className="input-number-filter" value={minAge} onChange={(e) => setMinAge(e.value)} placeholder="Min" />
             <InputNumber className="input-number-filter" value={maxAge} onChange={(e) => setMaxAge(e.value)} placeholder="Max" />
           </div>
         </div>
-        <div className="filter-buttons-container">
-          <Button type="submit" icon="pi pi-search" className="filter-buttons p-button-info" />
-          <Button type="button" icon="pi pi-filter-slash" className="filter-buttons p-button-info" outlined onClick={() => resetFilters()} />
+        <div className="filter-buttons-container glass-background">
+          <Button type="submit" icon="pi pi-search" className="filter-buttons button-filter-search" />
+          <Button type="button" icon="pi pi-filter-slash" className="filter-buttons button-filter-clear" outlined onClick={() => resetFilters()} />
         </div>
       </form>
     </div>

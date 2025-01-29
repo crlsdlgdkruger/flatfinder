@@ -24,6 +24,13 @@ header, main, footer{
   background-size: cover;
 }
 
+.page-title{
+  color: white;
+  font-family: "Rubik", serif;
+  font-weight: normal;
+  font-style: italic;
+}
+
 @media screen and (max-width: 1110px) {
   header, main, footer{
     width: 100%;

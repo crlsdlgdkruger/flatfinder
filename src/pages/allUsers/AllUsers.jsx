@@ -8,6 +8,7 @@ import { UserService } from "../../services/UserService";
 import { UserFilter } from "../../components/userFilter/UserFilter";
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
+import "./allUsers.css"
 
 export const AllUsers = () => {
   const [userLogged, setUserLogged] = useState(new User());
@@ -60,13 +61,13 @@ export const AllUsers = () => {
         </div>
         <div className="content-wrapper">
           <main>
-            <h3>All Users</h3>
+            <h3 className="page-title">All Users</h3>
             <UserFilter filters={filters} setFilters={setFilters} />
-            <div>
-              <Dropdown options={sortOptions} onChange={(e) => setSortBy(e.target.value)} value={sortBy} />
+            <div className="sort-container glass-background">
+              <Dropdown options={sortOptions} onChange={(e) => setSortBy(e.target.value)} value={sortBy} className="sort-dropdown" />
               {ascDesc === "asc" ?
-                <Button icon="pi pi-sort-amount-up" text severity="info" aria-label="Cancel" onClick={() => setAscDesc("desc")} /> :
-                <Button icon="pi pi-sort-amount-down" text severity="info" aria-label="Cancel" onClick={() => setAscDesc("asc")} />}
+                <Button icon="pi pi-sort-amount-up" text severity="info" aria-label="Cancel" onClick={() => setAscDesc("desc")} className="sort-button" /> :
+                <Button icon="pi pi-sort-amount-down" text severity="info" aria-label="Cancel" onClick={() => setAscDesc("asc")} className="sort-button" />}
             </div>
             <UserList users={users} />
           </main>
