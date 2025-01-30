@@ -61,7 +61,7 @@
   max-width: 100%;
 }
 
-.city-filter, .area-filter, .rent-price-filter {
+.city-filter, .area-filter, .rent-price-filter, .filter-buttons-container {
   display: flex;
   flex-direction: column;
   gap: 3px;
@@ -71,4 +71,11 @@
   border-radius: 10px;
   padding: 10px;
   max-width: 100vw;
+}
+
+@media screen and (max-width: 954px) {
+  .flats-filters{
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
 }

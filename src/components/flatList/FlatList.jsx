@@ -271,11 +271,11 @@ export const FlatList = ({ favoriteFlats = [], userId }) => {
           </div>
         </form>
         <form onSubmit={(e) => { submitFilters(e) }}>
-          <div>
-            <Dropdown options={sortOptions} value={sortBy} onChange={(e) => setSortBy(e.target.value)} />
+          <div className="sort-container glass-background">
+            <Dropdown options={sortOptions} value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="sort-dropdown" />
             {ascDesc === "asc" ?
-              <Button icon="pi pi-sort-amount-up" text severity="info" aria-label="Cancel" onClick={() => setAscDesc("desc")} /> :
-              <Button icon="pi pi-sort-amount-down" text severity="info" aria-label="Cancel" onClick={() => setAscDesc("asc")} />}
+              <Button icon="pi pi-sort-amount-up" text severity="info" aria-label="Cancel" onClick={() => setAscDesc("desc")} className="sort-button" /> :
+              <Button icon="pi pi-sort-amount-down" text severity="info" aria-label="Cancel" onClick={() => setAscDesc("asc")} className="sort-button" />}
           </div>
         </form>
       </div>
