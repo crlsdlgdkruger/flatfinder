@@ -3,7 +3,7 @@ import { Calendar } from "primereact/calendar"
 import { InputText } from "primereact/inputtext"
 import { RadioButton } from "primereact/radiobutton"
 import { useState } from "react"
-// import { Flat } from "../../models/Flat";
+import "./flatForm.css"
 
 
 export const FlatForm = ({ flat, setFlat, action, buttonAction }) => {
@@ -33,46 +33,46 @@ export const FlatForm = ({ flat, setFlat, action, buttonAction }) => {
   }
 
   return (
-    <div>
+    <div className="flat-form-container glass-background">
       <form onSubmit={(e) => { submitFlat(e) }}>
         {/* City input */}
-        <div>
+        <div className="input-flat-container">
           <label htmlFor="city-input">City</label>
           <InputText id="city-input" value={flat.city} onChange={(e) => { setFlat({ ...flat, city: e.target.value }) }} type='text' />
           {errors.city && <small className="p-error">{errors.city}</small>}
         </div>
         {/* Street name input */}
-        <div>
+        <div className="input-flat-container">
           <label htmlFor="street-name-input">Street Name</label>
           <InputText id="street-name-input" value={flat.streetName} onChange={(e) => { setFlat({ ...flat, streetName: e.target.value }) }} type='text' />
           {errors.streetName && <small className="p-error">{errors.streetName}</small>}
         </div>
         {/* Street number input */}
-        <div>
+        <div className="input-flat-container">
           <label htmlFor="street-number-input">Street Number</label>
           <InputText id="street-number-input" value={flat.streetNumber} onChange={(e) => { setFlat({ ...flat, streetNumber: e.target.value }) }} type='number' />
           {errors.streetNumber && <small className="p-error">{errors.streetNumber}</small>}
         </div>
         {/* Area size input */}
-        <div>
+        <div className="input-flat-container">
           <label htmlFor="area-size-input">Area Size</label>
           <InputText id="area-size-input" value={flat.areaSize} onChange={(e) => { setFlat({ ...flat, areaSize: e.target.value }) }} type='number' />
           {errors.areaSize && <small className="p-error">{errors.areaSize}</small>}
         </div>
         {/* Year built input */}
-        <div>
+        <div className="input-flat-container">
           <label htmlFor="year-built-input">Year Built</label>
           <InputText id="year-built-input" value={flat.yearBuilt} onChange={(e) => { setFlat({ ...flat, yearBuilt: e.target.value }) }} type='number' />
           {errors.yearBuilt && <small className="p-error">{errors.yearBuilt}</small>}
         </div>
         {/* rent price input */}
-        <div>
+        <div className="input-flat-container">
           <label htmlFor="rent-price-input">Rent Price</label>
           <InputText id="rent-price-input" value={flat.rentPrice} onChange={(e) => { setFlat({ ...flat, rentPrice: e.target.value }) }} type='number' />
           {errors.rentPrice && <small className="p-error">{errors.rentPrice}</small>}
         </div>
         {/* Date available input */}
-        <div>
+        <div className="input-flat-container">
           <label htmlFor="date-available-input">Date Available</label>
           <Calendar id="date-available-input" value={new Date(flat.dateAvailable)} onChange={(e) => { setFlat({ ...flat, dateAvailable: e.target.value }) }} dateFormat="mm/dd/yy" />
           {errors.dateAvailable && <small className="p-error">{errors.dateAvailable}</small>}
@@ -81,7 +81,7 @@ export const FlatForm = ({ flat, setFlat, action, buttonAction }) => {
         {/* Has AC input */}
         <div className="has-ac-radio-container">
           <div>
-            <label htmlFor="has-ac-yes">Has AC</label>
+            <label htmlFor="has-ac-yes" className="radio-label">Has AC</label>
           </div>
           <div>
             <RadioButton inputId="has-ac-yes" name="hasAC" value={true} onChange={(e) => { setFlat({ ...flat, hasAC: e.value }) }} checked={flat.hasAC === true} />
@@ -96,8 +96,8 @@ export const FlatForm = ({ flat, setFlat, action, buttonAction }) => {
           </div>
         </div>
         {/* Submit button */}
-        <div>
-          <Button label={buttonAction} type="submit" />
+        <div className="input-flat-container">
+          <Button label={buttonAction} type="submit" className="submit-button" />
         </div>
       </form>
     </div>

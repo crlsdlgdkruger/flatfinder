@@ -8,6 +8,7 @@ import { Password } from "primereact/password"
 import { Button } from "primereact/button"
 import { useNavigate } from "react-router-dom"
 import { LocalStorageService } from "../../services/LocalStorageService"
+import "./updatePassword.css"
 
 export const UpdatePassword = () => {
 
@@ -91,27 +92,29 @@ export const UpdatePassword = () => {
         <main>
           <h3 className="page-title">Update Password</h3>
           {/* <UpdatePasswordForm /> */}
-          <form onSubmit={(e) => { updatePassword(e); }}>
+          <form onSubmit={(e) => { updatePassword(e); }} className="update-password-form glass-background">
             {/* current password */}
-            <div>
+            <div className="input-updatepassword-container">
               <label htmlFor="current-password">Current Password</label>
               <Password id="current-password" value={currentPassword} onChange={(e) => { setCurrentPassword(e.target.value); }} type='password' toggleMask />
               {errors.password && <small className="p-error">{errors.password}</small>}
             </div>
             {/* new password */}
-            <div>
+            <div className="input-updatepassword-container">
               <label htmlFor="new-password">New Password</label>
               <Password id="new-password" value={newPassword} onChange={(e) => { setNewPassword(e.target.value); }} type='password' toggleMask />
               {errors.newPassword && <small className="p-error">{errors.newPassword}</small>}
             </div>
             {/* confirm new password */}
-            <div>
+            <div className="input-updatepassword-container">
               <label htmlFor="confirm-new-password">Confirm New Password</label>
               <Password id="confirm-new-password" value={confirmNewPassword} onChange={(e) => { setConfirmNewPassword(e.target.value); }} type='password' toggleMask />
               {errors.confirmNewPassword && <small className="p-error">{errors.confirmNewPassword}</small>}
             </div>
             {/* submit button  */}
-            <Button icon="pi pi-key" label="Update Password" iconPos="right" type='submit' />
+            <div className="input-updatepassword-container">
+              <Button icon="pi pi-key" label="Update Password" iconPos="right" type='submit' className="submit-button" />
+            </div>
           </form>
         </main>
       </div>

@@ -4,14 +4,12 @@ import { AuthService } from "../../services/AuthService";
 import { Header } from "../../components/header/Header";
 import { Footer } from "../../components/footer/Footer";
 import { Toast } from "primereact/toast";
-import "../pages.css";
-import "./editUser.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { UserService } from "../../services/UserService";
 import { UserForm } from "../../components/userForm/UserForm";
-import { User } from "../../models/User";
 import { LocalStorageService } from "../../services/LocalStorageService";
-import { use } from "react";
+import "../pages.css";
+import "./editUser.css";
 
 export const EditUser = () => {
 
@@ -92,7 +90,9 @@ export const EditUser = () => {
         <Toast ref={toast} />
         <main>
           <h3 className="page-title">Edit User</h3>
-          {user && <UserForm user={user} setUser={setUser} action={editUser} buttonAction="Update" />}
+          <div className="form-wrapper glass-background">
+            {user && <UserForm user={user} setUser={setUser} action={editUser} buttonAction="Update" />}
+          </div>
         </main>
       </div>
       <div className="footer-wrapper">
