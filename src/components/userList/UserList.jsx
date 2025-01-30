@@ -58,7 +58,6 @@ export const UserList = ({ users, filters, setFilters }) => {
 
   return (
     <div className="user-list-container">
-      <h2>Users</h2>
       {usersDTO &&
         <DataTable value={usersDTO} showGridlines >
           <Column field="firstName" header="First Name" />

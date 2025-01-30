@@ -5,17 +5,36 @@
 .logo-container {
   display: flex;
   align-items: center;
+  border-radius: 5px;
+}
+
+.logo-container:hover {
+  background-color: white;
+  transition: all 0.3s ease-in-out;
+}
+
+.logo-container:hover .logo-legend,
+.logo-container:hover .logo-legend span {
+  color: #10181b;
 }
 
 .logo-icon {
   width: 50px;
   height: 50px;
   fill: currentColor;
-  color: teal;
+  filter: drop-shadow(0 0 1px black);
 }
 
 .logo-legend {
   margin: 0 0 0 10px;
+  font-family: "Rubik", serif;
+  font-weight: 300;
+  color: #cbe1e9
+}
+
+.logo-legend span {
+  font-weight: 450;
+  color: #dde3eb;
 }
 
 .avatar-container {
@@ -24,12 +43,28 @@
   gap: 0.5rem;
 }
 
+.p-menuitem-content span{
+  color: #cbe1e9
+}
+
+.p-menuitem-content:hover span{
+  color: #10181b
+}
+
 .menubar{
   background-color: transparent;
   border: none;
   justify-content: space-between;
   border-radius: 0;
   padding: 0.5rem 0;
+  z-index: 1000;
+}
+
+svg.p-icon{
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  color: #10181b;
 }
 
 .p-menubar .p-menuitem>.p-menuitem-content .p-menuitem-link {
@@ -40,4 +75,22 @@
   cursor: pointer;
   background-color: transparent;
   border: none;
+}
+
+.p-submenu-list{
+  right: 0;
+}
+
+.p-submenu-list span{
+  color: #10181b;
+}
+
+.p-submenu-list span:hover {
+  color: black;
+}
+
+@media screen and (max-width: 961px) {
+  .p-menuitem-content span {
+    color: #10181b;
+  }
 }

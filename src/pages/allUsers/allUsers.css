@@ -1,0 +1,30 @@
+.sort-container{
+  display: flex;
+  flex-direction: row;
+  width: calc(25% - 11px);
+  padding: 10px;
+  border: 1px solid #d1d1d1;
+  border-radius: 10px;
+  margin: 0.5rem 0;
+}
+
+.sort-dropdown{
+  width: 100px;
+  flex: 1;
+}
+
+.sort-button{
+  background-color: #10181b;
+  flex-shrink: 0;
+}
+
+.sort-button span{
+  fill: currentColor;
+  color: white;
+}
+
+@media screen and (max-width: 954px) {
+  .sort-container{
+    width: 100%;
+  }
+}

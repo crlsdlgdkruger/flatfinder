@@ -5,7 +5,7 @@ export const Footer = () => {
       <div className="copyright">
         <p>Copyright © 2025 All rights reserved.</p>
       </div>
-      <div className="social">
+      {/* <div className="social">
         <p>Follow us</p>
         <div className="social-icons">
           <i className="pi pi-facebook facebook-icon"></i>
@@ -13,7 +13,7 @@ export const Footer = () => {
           <i className="pi pi-whatsapp whatsapp-icon"></i>
           <i className="pi pi-twitter twitter-icon"></i>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

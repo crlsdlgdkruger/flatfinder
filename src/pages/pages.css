@@ -8,7 +8,7 @@
 }
 
 .header-wrapper{
-  border-bottom: 1px solid #d1d1d1;
+  /* border-bottom: 1px solid #d1d1d1; */
 }
 
 .footer-wrapper{
@@ -20,10 +20,19 @@
 /*}
 
 .page-wrapper {
-  background-color: #f5f5f5;
+  /* background-color: #f5f5f5; */
   display: grid;
   min-height: 100vh;
   grid-template-rows: auto 1fr auto;
+  background-image: url("../../public/images/ciudad11.jpg");
+  background-size: cover;
+}
+
+.page-title{
+  color: white;
+  font-family: "Rubik", serif;
+  font-weight: normal;
+  font-style: italic;
 }
 
 @media screen and (max-width: 1110px) {
