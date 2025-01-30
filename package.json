@@ -10,13 +10,11 @@
     "firebase": "^11.1.0",
     "flatfinder": "file:",
     "primeicons": "^7.0.0",
-    "primereact": "^10.9.2",
+    "primereact": "^10.8.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.1.1",
     "react-scripts": "5.0.1",
-    "react-transition-group": "^4.4.5",
-    "sweetalert2": "^11.15.10",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -44,10 +42,8 @@
     ]
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.0.1",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.5.1",
-    "postcss-loader": "^8.1.1",
-    "tailwindcss": "^4.0.1"
+    "tailwindcss": "^4.0.0"
   }
 }

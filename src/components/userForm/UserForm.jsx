@@ -1,3 +1,8 @@
+import { Button } from "primereact/button";
+import { Calendar } from "primereact/calendar";
+import { InputText } from "primereact/inputtext";
+import { Password } from "primereact/password";
+import { RadioButton } from "primereact/radiobutton";
 import { useEffect, useState } from "react";
 import { LocalStorageService } from "../../services/LocalStorageService";
 
@@ -12,97 +17,108 @@ export const UserForm = ({ user = {}, setUser, action, buttonAction }) => {
     if (validate()) {
       action(userToEdit);
     }
-  };
+  }
 
   useEffect(() => {
-    console.log("User to edit", userToEdit, "Errors", errors);
+    console.log('User to edit', userToEdit, 'Errors', errors);
   }, [userToEdit, errors]);
 
   useEffect(() => {
     const localStorageService = new LocalStorageService();
-    console.log("Is UserLogged admin", localStorageService.isAdmin());
+    console.log('Is UserLogged admin', localStorageService.isAdmin());
     if (user) {
       setIsUserLoggedAdmin(localStorageService.isAdmin());
     }
   }, []);
 
+
   const validate = () => {
     const errors = {};
-    if (!userToEdit.firstName || userToEdit.firstName.length < 2) errors.firstName = "First name must be at least 2 characters";
-    if (!userToEdit.lastName || userToEdit.lastName.length < 2) errors.lastName = "Last name must be at least 2 characters";
-    if (!userToEdit.birthDate) {
-      errors.birthDate = "Birth date is required";
-    } else {
-      const birthDate = new Date(userToEdit.birthDate);
-      const age = new Date().getFullYear() - birthDate.getFullYear();
-      if (age < 18 || age > 120) {
-        errors.birthDate = "Age must be between 18 and 120 years";
-      }
-    }
-    if (!userToEdit.email || !/\S+@\S+\.\S+/.test(userToEdit.email)) errors.email = "Invalid email format";
+    if (!userToEdit.firstName) errors.firstName = "First name is required";
+    if (!userToEdit.lastName) errors.lastName = "Last name is required";
+    if (!userToEdit.birthDate) errors.birthDate = "Birth date is required";
+    if (!userToEdit.email) errors.email = "Email is required";
     if (!userToEdit.password || userToEdit.password.length < 6) errors.password = "Password must be at least 6 characters";
-    if (!/[A-Za-z]/.test(userToEdit.password) || !/[0-9]/.test(userToEdit.password) || !/[^A-Za-z0-9]/.test(userToEdit.password)) {
-      errors.password = "Password must include letters, numbers, and a special character";
-    }
     if ((userToEdit.password !== confirmPassword) && buttonAction === "Register") errors.confirmPassword = "Passwords do not match";
     setErrors(errors);
     return Object.keys(errors).length === 0;
-  };
+  }
+
 
   return (
-    <div className="bg-black bg-opacity-30 p-6 sm:p-8 rounded-md shadow-md max-w-5xl w-full text-white">
-      <form onSubmit={submitUser} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {/* First Name */}
+    <div className="user-form-container">
+      <form onSubmit={(e) => { submitUser(e) }}>
+        {/* First name input */}
         <div>
-          <label htmlFor="first-name" className="block text-sm font-medium mb-2 text-gray-300">First Name</label>
-          <input id="first-name" value={userToEdit.firstName} onChange={(e) => setUserToEdit({ ...userToEdit, firstName: e.target.value })} className="w-full p-2 sm:p-2.5 rounded-md border border-gray-500 text-black" />
-          {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName}</p>}
+          <label htmlFor="first-name">First Name</label>
+          <InputText id="first-name" value={userToEdit.firstName} onChange={(e) => { setUserToEdit({ ...userToEdit, firstName: e.target.value }) }} type='text' />
+          {errors.firstName && <small className="p-error">{errors.firstName}</small>}
         </div>
 
-        {/* Last Name */}
+        {/* last name input */}
         <div>
-          <label htmlFor="last-name" className="block text-sm font-medium mb-2 text-gray-300">Last Name</label>
-          <input id="last-name" value={userToEdit.lastName} onChange={(e) => setUserToEdit({ ...userToEdit, lastName: e.target.value })} className="w-full p-2 sm:p-2.5 rounded-md border border-gray-500 text-black" />
-          {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
+          <label htmlFor="last-name">Last Name</label>
+          <InputText id="last-name" value={userToEdit.lastName} onChange={(e) => { setUserToEdit({ ...userToEdit, lastName: e.target.value }) }} type='text' />
+          {errors.lastName && <small className="p-error">{errors.lastName}</small>}
         </div>
 
-        {/* Birth Date */}
+        {/* birth date input */}
         <div>
-          <label htmlFor="birth-date" className="block text-sm font-medium mb-2 text-gray-300">Birth Date</label>
-          <input id="birth-date" type="date" value={userToEdit.birthDate} onChange={(e) => setUserToEdit({ ...userToEdit, birthDate: e.target.value })} className="w-full p-2 sm:p-2.5 rounded-md border border-gray-500 text-black" />
-          {errors.birthDate && <p className="text-red-500 text-sm">{errors.birthDate}</p>}
+          <label htmlFor="birth-date">Birth Date</label>
+          <Calendar id="birth-date" value={userToEdit.birthDate} onChange={(e) => { setUserToEdit({ ...userToEdit, birthDate: e.target.value }) }} dateFormat="dd/mm/yy" />
+          {errors.birthDate && <small className="p-error">{errors.birthDate}</small>}
         </div>
 
-        {/* Email */}
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium mb-2 text-gray-300">Email</label>
-          <input id="email" type="email" value={userToEdit.email} onChange={(e) => setUserToEdit({ ...userToEdit, email: e.target.value })} className="w-full p-2 sm:p-2.5 rounded-md border border-gray-500 text-black" />
-          {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-        </div>
-
-        {/* Password */}
-        <div>
-          <label htmlFor="password" className="block text-sm font-medium mb-2 text-gray-300">Password</label>
-          <input id="password" type="password" value={userToEdit.password} onChange={(e) => setUserToEdit({ ...userToEdit, password: e.target.value })} className="w-full p-2 sm:p-2.5 rounded-md border border-gray-500 text-black" />
-          {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
-        </div>
-
-        {/* Confirm Password */}
-        {buttonAction === "Register" && (
+        {/* email input */}
+        {buttonAction === "Update" &&
           <div>
-            <label htmlFor="confirm-password" className="block text-sm font-medium mb-2 text-gray-300">Confirm Password</label>
-            <input id="confirm-password" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="w-full p-2 sm:p-2.5 rounded-md border border-gray-500 text-black" />
-            {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword}</p>}
-          </div>
-        )}
+            <label htmlFor="email">Email</label>
+            <InputText id="email" disabled value={userToEdit.email} onChange={(e) => { setUserToEdit({ ...userToEdit, email: e.target.value }) }} type='email' />
+            {errors.email && <small className="p-error">{errors.email}</small>}
+          </div>}
 
-        {/* Submit Button */}
-        <div className="col-span-1 sm:col-span-2 mt-4">
-          <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 sm:py-3 px-4 rounded-md">
-            {buttonAction}
-          </button>
-        </div>
+        {buttonAction === "Register" &&
+          <div>
+            <label htmlFor="email">Email</label>
+            <InputText id="email" value={userToEdit.email} onChange={(e) => { setUserToEdit({ ...userToEdit, email: e.target.value }) }} type='email' />
+            {errors.email && <small className="p-error">{errors.email}</small>}
+          </div>}
+
+        {/* password input */}
+        {buttonAction === "Register" &&
+          <div>
+            <label htmlFor="password">Password</label>
+            <Password id="password" value={userToEdit.password} onChange={(e) => { setUserToEdit({ ...userToEdit, password: e.target.value }) }} type='password' toggleMask />
+            {errors.password && <small className="p-error">{errors.password}</small>}
+          </div>}
+
+        {/* confirm password input */}
+        {buttonAction === "Register" &&
+          <div>
+            <label htmlFor="confirm-password">Confirm Password</label>
+            <Password id="confirm-password" value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value) }} type='password' toggleMask />
+            {errors.confirmPassword && <small className="p-error">{errors.confirmPassword}</small>}
+          </div>}
+
+        {/* role input */}
+        {isUserLoggedAdmin &&
+          <div className="role-input-container">
+            <div>
+              <label htmlFor="role-user">Role</label>
+            </div>
+            <div>
+              <RadioButton inputId="role-user" name="role" value="user" onChange={(e) => { setUserToEdit({ ...userToEdit, role: e.value }) }} checked={userToEdit.role === "user"} />
+              <label htmlFor="role-user">User</label>
+            </div>
+            <div>
+              <RadioButton inputId="role-admin" name="role" value="admin" onChange={(e) => { setUserToEdit({ ...userToEdit, role: e.value }) }} checked={userToEdit.role === "admin"} />
+              <label htmlFor="role-admin">Admin</label>
+            </div>
+          </div>}
+
+        {/* submit button  */}
+        <Button icon="pi pi-user-plus" label={buttonAction} iconPos="right" type='submit' />
       </form>
     </div>
-  );
-};
+  )
+}
