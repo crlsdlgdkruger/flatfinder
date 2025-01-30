@@ -25,9 +25,10 @@ export const Register = () => {
   }
 
   return (
-    <div>
-      <div className='register-container'>
+    <div className='page-wrapper'>
+      <div className='register-container glass-background'>
         <Toast ref={toast} />
+        <h2 className='login-title'>Sign Up</h2>
         <UserForm user={user} setUser={setUser} action={submitRegister} buttonAction="Register" />
         {/* redirect link */}
         <p>Already have an account? <a href='/login' className='redirect-link'>Sign In</a></p>

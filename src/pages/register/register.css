@@ -1,10 +1,29 @@
 .register-container {
-  width: 60%;
-  border: 1px solid black;
-  margin: 0 auto;
+  display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 0;
+    align-items: center;
+    /* justify-content: center;
+    justify-items: center; */
+    text-align: center;
+    border: 1px solid #d1d1d1;
+    border-radius: 10px;
+    padding: 10px;
+    max-width: 680px;
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 6rem;
 }
 
 .p-error{
   color: red;
   font-size: 0.9em;
+}
+
+@media screen and (max-width: 580px) {
+  .register-container{
+    width: 100%;
+  }
+  
 }

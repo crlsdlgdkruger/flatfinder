@@ -5,6 +5,7 @@ import { Password } from "primereact/password";
 import { RadioButton } from "primereact/radiobutton";
 import { useEffect, useState } from "react";
 import { LocalStorageService } from "../../services/LocalStorageService";
+import "./userForm.css"
 
 export const UserForm = ({ user = {}, setUser, action, buttonAction }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -49,62 +50,62 @@ export const UserForm = ({ user = {}, setUser, action, buttonAction }) => {
     <div className="user-form-container">
       <form onSubmit={(e) => { submitUser(e) }}>
         {/* First name input */}
-        <div>
-          <label htmlFor="first-name">First Name</label>
-          <InputText id="first-name" value={userToEdit.firstName} onChange={(e) => { setUserToEdit({ ...userToEdit, firstName: e.target.value }) }} type='text' />
+        <div className="input-container-firstname">
+          <label htmlFor="first-name" className="input-label">First Name</label>
+          <InputText className="input-first-name" id="first-name" value={userToEdit.firstName} onChange={(e) => { setUserToEdit({ ...userToEdit, firstName: e.target.value }) }} type='text' />
           {errors.firstName && <small className="p-error">{errors.firstName}</small>}
         </div>
 
         {/* last name input */}
-        <div>
-          <label htmlFor="last-name">Last Name</label>
-          <InputText id="last-name" value={userToEdit.lastName} onChange={(e) => { setUserToEdit({ ...userToEdit, lastName: e.target.value }) }} type='text' />
+        <div className="input-container-lastname">
+          <label htmlFor="last-name" className="input-label">Last Name</label>
+          <InputText className="input-last-name" id="last-name" value={userToEdit.lastName} onChange={(e) => { setUserToEdit({ ...userToEdit, lastName: e.target.value }) }} type='text' />
           {errors.lastName && <small className="p-error">{errors.lastName}</small>}
         </div>
 
         {/* birth date input */}
-        <div>
-          <label htmlFor="birth-date">Birth Date</label>
-          <Calendar id="birth-date" value={userToEdit.birthDate} onChange={(e) => { setUserToEdit({ ...userToEdit, birthDate: e.target.value }) }} dateFormat="dd/mm/yy" />
+        <div className="input-container-birthdate">
+          <label htmlFor="birth-date" className="input-label">Birth Date</label>
+          <Calendar className="input-birth-date" id="birth-date" value={userToEdit.birthDate} onChange={(e) => { setUserToEdit({ ...userToEdit, birthDate: e.target.value }) }} dateFormat="dd/mm/yy" />
           {errors.birthDate && <small className="p-error">{errors.birthDate}</small>}
         </div>
 
         {/* email input */}
         {buttonAction === "Update" &&
-          <div>
-            <label htmlFor="email">Email</label>
-            <InputText id="email" disabled value={userToEdit.email} onChange={(e) => { setUserToEdit({ ...userToEdit, email: e.target.value }) }} type='email' />
+          <div className="input-container-email">
+            <label htmlFor="email" className="input-label">Email</label>
+            <InputText className="input-email" id="email" disabled value={userToEdit.email} onChange={(e) => { setUserToEdit({ ...userToEdit, email: e.target.value }) }} type='email' />
             {errors.email && <small className="p-error">{errors.email}</small>}
           </div>}
 
         {buttonAction === "Register" &&
-          <div>
-            <label htmlFor="email">Email</label>
-            <InputText id="email" value={userToEdit.email} onChange={(e) => { setUserToEdit({ ...userToEdit, email: e.target.value }) }} type='email' />
+          <div className="input-container-email">
+            <label htmlFor="email" className="input-label">Email</label>
+            <InputText className="input-email" id="email" value={userToEdit.email} onChange={(e) => { setUserToEdit({ ...userToEdit, email: e.target.value }) }} type='email' />
             {errors.email && <small className="p-error">{errors.email}</small>}
           </div>}
 
         {/* password input */}
         {buttonAction === "Register" &&
-          <div>
-            <label htmlFor="password">Password</label>
-            <Password id="password" value={userToEdit.password} onChange={(e) => { setUserToEdit({ ...userToEdit, password: e.target.value }) }} type='password' toggleMask />
+          <div className="input-container-password">
+            <label htmlFor="password" className="input-label">Password</label>
+            <Password className="input-password" id="password" value={userToEdit.password} onChange={(e) => { setUserToEdit({ ...userToEdit, password: e.target.value }) }} type='password' toggleMask />
             {errors.password && <small className="p-error">{errors.password}</small>}
           </div>}
 
         {/* confirm password input */}
         {buttonAction === "Register" &&
-          <div>
-            <label htmlFor="confirm-password">Confirm Password</label>
-            <Password id="confirm-password" value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value) }} type='password' toggleMask />
+          <div className="input-container-confirm">
+            <label htmlFor="confirm-password" className="input-label">Confirm Password</label>
+            <Password className="input-confirm" id="confirm-password" value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value) }} type='password' toggleMask />
             {errors.confirmPassword && <small className="p-error">{errors.confirmPassword}</small>}
           </div>}
 
         {/* role input */}
         {isUserLoggedAdmin &&
-          <div className="role-input-container">
+          <div className="input-container-role">
             <div>
-              <label htmlFor="role-user">Role</label>
+              <label htmlFor="role-user" className="input-label">Role</label>
             </div>
             <div>
               <RadioButton inputId="role-user" name="role" value="user" onChange={(e) => { setUserToEdit({ ...userToEdit, role: e.value }) }} checked={userToEdit.role === "user"} />
@@ -117,7 +118,7 @@ export const UserForm = ({ user = {}, setUser, action, buttonAction }) => {
           </div>}
 
         {/* submit button  */}
-        <Button icon="pi pi-user-plus" label={buttonAction} iconPos="right" type='submit' />
+        <Button icon="pi pi-user-plus" label={buttonAction} iconPos="right" type='submit' className="submit-button" />
       </form>
     </div>
   )
