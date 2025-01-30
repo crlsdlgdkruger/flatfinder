@@ -1,4 +1,8 @@
-header, main, footer{
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* header, main, footer{
   width: 90%;
   margin: 0 auto;
 }
@@ -13,7 +17,7 @@ header, main, footer{
 
 .header-wrapper, .content-wrapper{
   /* background-color: beige; */
-}
+/*}
 
 .page-wrapper {
   /* background-color: #f5f5f5; */
@@ -35,4 +39,4 @@ header, main, footer{
   header, main, footer{
     width: 100%;
   }
-}
+}*/
