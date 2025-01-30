@@ -102,7 +102,7 @@ export const UserForm = ({ user = {}, setUser, action, buttonAction }) => {
           </div>}
 
         {/* role input */}
-        {isUserLoggedAdmin &&
+        {isUserLoggedAdmin && buttonAction !== "Register" &&
           <div className="input-container-role">
             <div>
               <label htmlFor="role-user" className="input-label">Role</label>

@@ -58,18 +58,18 @@ export const Messages = ({ flatId, senderId, receiverId }) => {
 
   return (
     <div className="messages-container">
-      <label>Messages</label>
       <Toast ref={toast} />
-      <div>
+      <div className="glass-background messages-title-container">
+        <label className="messages-title">Add a message</label>
         <form onSubmit={(e) => { sendMessage(e) }}>
-          <InputText type="text" placeholder="Write a message" ref={content} />
+          <InputText type="text" placeholder="Write a message" ref={content} className="messages-input" />
         </form>
       </div>
       <div className="messages-list-container">
         {messages.length > 0 &&
           messages.map((message, index) => {
             return (
-              <div className="messages-item" key={index}>
+              <div className="messages-item glass-background" key={index}>
                 <label>De: {message.senderName}, {new Date(message.creationTime.seconds * 1000).toLocaleString()}</label>
                 <p>{message.content}</p>
               </div>

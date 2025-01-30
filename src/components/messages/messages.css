@@ -15,11 +15,26 @@
 
 .messages-item label{
   font-weight: bold;
-  color: #808080;
+  color: #10181b;
   font-size: 13px;
 }
 
 .messages-item p{
   margin: 0;
   font-size: large;
+}
+
+.messages-title-container{
+  padding: 10px;
+  border-bottom: 1px solid #d1d1d1;
+  border-radius: 10px;
+  margin: 1rem 0;
+}
+.messages-title{
+  color: #10181b;
+  font-size: 20px;
+  font-weight: bold;
+}
+.messages-input{
+  width: 100%;
 }
