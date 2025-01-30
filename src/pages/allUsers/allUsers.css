@@ -22,3 +22,9 @@
   fill: currentColor;
   color: white;
 }
+
+@media screen and (max-width: 954px) {
+  .sort-container{
+    width: 100%;
+  }
+}

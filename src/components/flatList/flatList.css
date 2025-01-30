@@ -29,3 +29,46 @@
     /* Asegura un mínimo para la tabla */
   }
 }
+
+.flats-filters{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: 1rem;
+  width: 100%;
+}
+
+.filter-label {
+  font-weight: 500;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: row;
+  gap: 3px;
+  padding: 0;
+  width: 100%;
+}
+
+.input-number-filter {
+  width: 50%;
+}
+
+.input-city-filter{
+  width: 100%;
+}
+
+.input-number-filter input {
+  max-width: 100%;
+}
+
+.city-filter, .area-filter, .rent-price-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 0;
+  align-items: center;
+  border: 1px solid #d1d1d1;
+  border-radius: 10px;
+  padding: 10px;
+  max-width: 100vw;
+}

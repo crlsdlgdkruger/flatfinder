@@ -1,17 +1,15 @@
 import { DataTable } from 'primereact/datatable';
 import { useEffect, useState } from 'react';
 import { FlatService } from '../../services/FlatService';
-import { UserService } from '../../services/UserService';
 import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
-import "./flatList.css";
 import { InputText } from 'primereact/inputtext';
 import { InputNumber } from 'primereact/inputnumber';
 import { LocalStorageService } from '../../services/LocalStorageService';
 import { Utils } from '../../services/Utils';
-import { use } from 'react';
 import { Dropdown } from 'primereact/dropdown';
+import "./flatList.css";
 
 export const FlatList = ({ favoriteFlats = [], userId }) => {
 
@@ -43,13 +41,13 @@ export const FlatList = ({ favoriteFlats = [], userId }) => {
     }
   }, [filters, sortBy, ascDesc]);
 
-  useEffect(() => {
-    console.log('flats', flats, userId);
-  }, [flats, userId]);
+  // useEffect(() => {
+  //   console.log('flats', flats, userId);
+  // }, [flats, userId]);
 
-  useEffect(() => {
-    console.log('filters', filters);
-  }, [filters]);
+  // useEffect(() => {
+  //   console.log('filters', filters);
+  // }, [filters]);
 
   const fetchFlats = async () => {
     const service = new FlatService();
@@ -71,7 +69,6 @@ export const FlatList = ({ favoriteFlats = [], userId }) => {
   };
 
   const handleView = (flat) => {
-    // navigate(`/viewflat/:${flat.id}`, { state: { flat } });
     navigate(`/viewflat/flatId/${flat.id}`);
   };
 
@@ -126,62 +123,62 @@ export const FlatList = ({ favoriteFlats = [], userId }) => {
     );
   };
 
-  const cityFilterElement = () => {
-    return (
-      <span className="p-input-icon-right">
-        <InputText
-          value={cityFilter}
-          onChange={(e) => setCityFilter(e.target.value)}
-          placeholder="Search by city"
-        />
-        <i className="pi pi-search search-icon" />
-      </span>
-    );
-  };
+  // const cityFilterElement = () => {
+  //   return (
+  //     <span className="p-input-icon-right">
+  //       <InputText
+  //         value={cityFilter}
+  //         onChange={(e) => setCityFilter(e.target.value)}
+  //         placeholder="Search by city"
+  //       />
+  //       <i className="pi pi-search search-icon" />
+  //     </span>
+  //   );
+  // };
 
-  const rentPriceFilterElement = () => {
-    return (
-      <div className="p-inputgroup">
-        <span className="p-inputgroup-addon">Min</span>
-        <InputNumber
-          value={minRentPriceFilter}
-          onValueChange={(e) => setMinRentPriceFilter(e.value)}
-          placeholder="Min price"
-          mode="currency"
-          currency="USD"
-          locale="en-US"
-        />
-        <span className="p-inputgroup-addon">Max</span>
-        <InputNumber
-          value={maxRentPriceFilter}
-          onValueChange={(e) => setMaxRentPriceFilter(e.value)}
-          placeholder="Max price"
-          mode="currency"
-          currency="USD"
-          locale="en-US"
-        />
-      </div>
-    );
-  };
+  // const rentPriceFilterElement = () => {
+  //   return (
+  //     <div className="p-inputgroup">
+  //       <span className="p-inputgroup-addon">Min</span>
+  //       <InputNumber
+  //         value={minRentPriceFilter}
+  //         onValueChange={(e) => setMinRentPriceFilter(e.value)}
+  //         placeholder="Min price"
+  //         mode="currency"
+  //         currency="USD"
+  //         locale="en-US"
+  //       />
+  //       <span className="p-inputgroup-addon">Max</span>
+  //       <InputNumber
+  //         value={maxRentPriceFilter}
+  //         onValueChange={(e) => setMaxRentPriceFilter(e.value)}
+  //         placeholder="Max price"
+  //         mode="currency"
+  //         currency="USD"
+  //         locale="en-US"
+  //       />
+  //     </div>
+  //   );
+  // };
 
-  const areaFilterElement = () => {
-    return (
-      <div className="p-inputgroup">
-        <span className="p-inputgroup-addon">Min</span>
-        <InputNumber
-          value={minAreaFilter}
-          onValueChange={(e) => setMinAreaFilter(e.value)}
-          placeholder="Min Area"
-        />
-        <span className="p-inputgroup-addon">Max</span>
-        <InputNumber
-          value={maxAreaFilter}
-          onValueChange={(e) => setMaxAreaFilter(e.value)}
-          placeholder="Max Area"
-        />
-      </div>
-    );
-  };
+  // const areaFilterElement = () => {
+  //   return (
+  //     <div className="p-inputgroup">
+  //       <span className="p-inputgroup-addon">Min</span>
+  //       <InputNumber
+  //         value={minAreaFilter}
+  //         onValueChange={(e) => setMinAreaFilter(e.value)}
+  //         placeholder="Min Area"
+  //       />
+  //       <span className="p-inputgroup-addon">Max</span>
+  //       <InputNumber
+  //         value={maxAreaFilter}
+  //         onValueChange={(e) => setMaxAreaFilter(e.value)}
+  //         placeholder="Max Area"
+  //       />
+  //     </div>
+  //   );
+  // };
 
   // const filteredFlats = flats.filter((flat) => {
   //   const matchesCity = cityFilter
@@ -246,27 +243,30 @@ export const FlatList = ({ favoriteFlats = [], userId }) => {
 
   return (
     <div className="flat-list-container">
-      <h4>Flat List</h4>
       <div>
         <form onSubmit={(e) => { submitFilters(e) }}>
           <div className='flats-filters'>
-            <div className='city-filter'>
-              <label>Filter by city</label>
-              <InputText value={cityFilter} onChange={(e) => setCityFilter(e.target.value)} placeholder="Search by city" />
+            <div className='city-filter glass-background'>
+              <label className='filter-label'>Filter by city</label>
+              <InputText className='input-city-filter' value={cityFilter} onChange={(e) => setCityFilter(e.target.value)} placeholder="Search by city" />
             </div>
-            <div className='area-filter'>
-              <label>Filter by area</label>
-              <InputNumber value={minAreaFilter} onValueChange={(e) => setMinAreaFilter(e.value)} placeholder="Min area" />
-              <InputNumber value={maxAreaFilter} onValueChange={(e) => setMaxAreaFilter(e.value)} placeholder="Max area" />
+            <div className='area-filter glass-background'>
+              <label className='filter-label'>Filter by area</label>
+              <div className='input-container'>
+                <InputNumber className='input-number-filter' value={minAreaFilter} onValueChange={(e) => setMinAreaFilter(e.value)} placeholder="Min area" />
+                <InputNumber className='input-number-filter' value={maxAreaFilter} onValueChange={(e) => setMaxAreaFilter(e.value)} placeholder="Max area" />
+              </div>
             </div>
-            <div className='rent-price-filter'>
-              <label>Filter by rent price</label>
-              <InputNumber value={minRentPriceFilter} onValueChange={(e) => setMinRentPriceFilter(e.value)} placeholder="Min price" mode="currency" currency="USD" locale="en-US" />
-              <InputNumber value={maxRentPriceFilter} onValueChange={(e) => setMaxRentPriceFilter(e.value)} placeholder="Max price" mode="currency" currency="USD" locale="en-US" />
+            <div className='rent-price-filter glass-background'>
+              <label className='filter-label'>Filter by rent price</label>
+              <div className='input-container'>
+                <InputNumber className='input-number-filter' value={minRentPriceFilter} onValueChange={(e) => setMinRentPriceFilter(e.value)} placeholder="Min price" mode="currency" currency="USD" locale="en-US" />
+                <InputNumber className='input-number-filter' value={maxRentPriceFilter} onValueChange={(e) => setMaxRentPriceFilter(e.value)} placeholder="Max price" mode="currency" currency="USD" locale="en-US" />
+              </div>
             </div>
-            <div>
-              <Button type="submit" icon="pi pi-search" className="p-button-sm p-button-info" />
-              <Button type="button" icon="pi pi-filter-slash" className="p-button-sm p-button-info" outlined onClick={() => resetFilters()} />
+            <div className="filter-buttons-container glass-background">
+              <Button type="submit" icon="pi pi-search" className="filter-buttons button-filter-search" />
+              <Button type="button" icon="pi pi-filter-slash" className="filter-buttons button-filter-clear" outlined onClick={() => resetFilters()} />
             </div>
           </div>
         </form>

@@ -76,3 +76,21 @@ svg.p-icon{
   background-color: transparent;
   border: none;
 }
+
+.p-submenu-list{
+  right: 0;
+}
+
+.p-submenu-list span{
+  color: #10181b;
+}
+
+.p-submenu-list span:hover {
+  color: black;
+}
+
+@media screen and (max-width: 961px) {
+  .p-menuitem-content span {
+    color: #10181b;
+  }
+}

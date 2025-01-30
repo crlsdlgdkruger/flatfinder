@@ -33,7 +33,7 @@ export const Home = () => {
       </div>
       <div className="content-wrapper">
         <main>
-          <h3>Home</h3>
+          <h3 className="page-title">Home</h3>
           <FlatList />
         </main>
       </div>
