@@ -53,7 +53,7 @@ export const NewFlat = () => {
       <div className="content-wrapper">
         <Toast ref={toast} />
         <main>
-          <h1>New Flat</h1>
+          <h3 className="page-title">New Flat</h3>
           <FlatForm flat={flat} setFlat={setFlat} action={createFlat} buttonAction={"SAVE"} />
         </main>
       </div>

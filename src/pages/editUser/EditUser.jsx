@@ -91,7 +91,7 @@ export const EditUser = () => {
       <div className="content-wrapper">
         <Toast ref={toast} />
         <main>
-          <h1>Edit User</h1>
+          <h3 className="page-title">Edit User</h3>
           {user && <UserForm user={user} setUser={setUser} action={editUser} buttonAction="Update" />}
         </main>
       </div>

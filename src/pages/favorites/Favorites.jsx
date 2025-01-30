@@ -36,7 +36,7 @@ export const Favorites = () => {
       </div>
       <div className="content-wrapper">
         <main>
-          <h1>Favorites</h1>
+          <h3 className="page-title">Favorites</h3>
           {user[0] && userId && <FlatList favoriteFlats={user[0].favoriteFlats} />}
         </main>
       </div>

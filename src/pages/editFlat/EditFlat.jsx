@@ -64,7 +64,7 @@ export const EditFlat = () => {
       <div className="content-wrapper">
         <Toast ref={toast} />
         <main>
-          <h1>Edit Flat</h1>
+          <h3 className="page-title">Edit Flat</h3>
           <FlatForm flat={flat} setFlat={setFlat} action={updateFlat} buttonAction={"UPDATE"} />
         </main>
       </div>

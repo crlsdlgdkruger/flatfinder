@@ -35,7 +35,7 @@ export const MyFlats = () => {
       </div>
       <div className="content-wrapper">
         <main>
-          <h3>My Flats</h3>
+          <h3 className="page-title">My Flats</h3>
           {user[0] && userId && <FlatList userId={userId} />}
         </main>
         <div className="add-button-wrapper">

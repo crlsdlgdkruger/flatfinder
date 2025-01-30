@@ -89,7 +89,7 @@ export const UpdatePassword = () => {
       <div className="content-wrapper">
         <Toast ref={toast} />
         <main>
-          <h1>Update Password</h1>
+          <h3 className="page-title">Update Password</h3>
           {/* <UpdatePasswordForm /> */}
           <form onSubmit={(e) => { updatePassword(e); }}>
             {/* current password */}
