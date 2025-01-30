@@ -35,15 +35,26 @@ export const UserForm = ({ user = {}, setUser, action, buttonAction }) => {
 
   const validate = () => {
     const errors = {};
-    if (!userToEdit.firstName) errors.firstName = "First name is required";
-    if (!userToEdit.lastName) errors.lastName = "Last name is required";
-    if (!userToEdit.birthDate) errors.birthDate = "Birth date is required";
-    if (!userToEdit.email) errors.email = "Email is required";
+    if (!userToEdit.firstName || userToEdit.firstName.length < 2) errors.firstName = "First name must be at least 2 characters";
+    if (!userToEdit.lastName || userToEdit.lastName.length < 2) errors.lastName = "Last name must be at least 2 characters";
+    if (!userToEdit.birthDate) {
+      errors.birthDate = "Birth date is required";
+    } else {
+      const birthDate = new Date(userToEdit.birthDate);
+      const age = new Date().getFullYear() - birthDate.getFullYear();
+      if (age < 18 || age > 120) {
+        errors.birthDate = "Age must be between 18 and 120 years";
+      }
+    }
+    if (!userToEdit.email || !/\S+@\S+\.\S+/.test(userToEdit.email)) errors.email = "Invalid email format";
     if (!userToEdit.password || userToEdit.password.length < 6) errors.password = "Password must be at least 6 characters";
+    if (!/[A-Za-z]/.test(userToEdit.password) || !/[0-9]/.test(userToEdit.password) || !/[^A-Za-z0-9]/.test(userToEdit.password)) {
+      errors.password = "Password must include letters, numbers, and a special character";
+    }
     if ((userToEdit.password !== confirmPassword) && buttonAction === "Register") errors.confirmPassword = "Passwords do not match";
     setErrors(errors);
     return Object.keys(errors).length === 0;
-  }
+  };
 
 
   return (

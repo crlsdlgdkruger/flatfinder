@@ -48,7 +48,7 @@ export const Header = () => {
       }
     ] : []),
     {
-      label: `Hi, ${user[0].firstName}`,
+      label: `Profile`,
       icon: 'pi pi-fw pi-user',
       items: [
         {
