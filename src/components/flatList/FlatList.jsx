@@ -11,7 +11,7 @@ import { Utils } from '../../services/Utils';
 import { Dropdown } from 'primereact/dropdown';
 import "./flatList.css";
 
-export const FlatList = ({ favoriteFlats = [], userId }) => {
+export const FlatList = ({ favoriteFlats = [], userId, isFavorites }) => {
 
   const [flats, setFlats] = useState([]);
   const [cityFilter, setCityFilter] = useState("");
@@ -32,7 +32,7 @@ export const FlatList = ({ favoriteFlats = [], userId }) => {
   ];
 
   useEffect(() => {
-    if (Object.keys(favoriteFlats).length === 0 && !userId) {
+    if (Object.keys(favoriteFlats).length === 0 && !userId && !isFavorites) {
       fetchFlats();
     } else if (userId) {
       fetchMyFlats();
@@ -50,18 +50,22 @@ export const FlatList = ({ favoriteFlats = [], userId }) => {
   // }, [filters]);
 
   const fetchFlats = async () => {
+    console.log('fetchFlats');
     const service = new FlatService();
     const data = await service.getFlats(filters, sortBy, ascDesc);
     setFlats(data);
   };
 
   const fetchFavoriteFlats = async () => {
+    console.log('favorites');
     const service = new FlatService();
     const data = await service.getFlatsByIds(favoriteFlats, filters, sortBy, ascDesc);
     setFlats(data);
   };
 
   const fetchMyFlats = async () => {
+    console.log('myflats');
+
     const service = new FlatService();
     const data = await service.getFlatsByUserId(userId, filters, sortBy, ascDesc);
     console.log('data', data)
