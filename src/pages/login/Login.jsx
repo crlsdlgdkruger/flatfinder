@@ -55,26 +55,26 @@ export const Login = () => {
 
 
   return (
-    <div>
-      <div className='login-container'>
+    <div className='page-wrapper'>
+      <div className='login-container glass-background'>
         <Toast ref={toast} />
         <form className='' onSubmit={e => submitLogin(e)}>
-          <h2>Sign In</h2>
+          <h2 className='login-title'>Sign In</h2>
 
           {/* email input*/}
-          <div>
-            <label htmlFor="email">Email</label>
-            <InputText id="email" value={email} onChange={(e) => { setEmail(e.target.value); clearMessages(); }} type='email' />
+          <div className='input-container-login '>
+            <label htmlFor="email" className='input-label'>Email</label>
+            <InputText id="email" value={email} onChange={(e) => { setEmail(e.target.value); clearMessages(); }} type='email' className='input-email' />
           </div>
 
           {/* password input */}
-          <div>
-            <label htmlFor="password">Password</label>
+          <div className='input-container-login'>
+            <label htmlFor="password" className='input-label'>Password</label>
             <Password id="password" value={password} onChange={(e) => { setPassword(e.target.value); clearMessages(); }} type='password' feedback={false} toggleMask />
           </div>
 
           {/* login button */}
-          <Button icon="pi pi-sign-in" label="Login" iconPos="right" type='submit' />
+          <Button icon="pi pi-sign-in" label="Login" iconPos="right" type='submit' className='login-button' />
 
           {/* redirect link */}
           <p>Don't have an account yet? <a href='/register' className='redirect-link'>Sign Up</a></p>
