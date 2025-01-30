@@ -1,85 +1,101 @@
-import { Button } from 'primereact/button';
-import { InputText } from 'primereact/inputtext';
-import { Password } from 'primereact/password';
-import { useContext, useEffect, useRef, useState } from 'react';
-import { UserService } from '../../services/UserService';
-import UserContext from '../../context/UserContext';
-
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Toast } from 'primereact/toast';
+import { UserService } from '../../services/UserService';
 import { LocalStorageService } from '../../services/LocalStorageService';
-import "./login.css"
+import Swal from 'sweetalert2';
+import "./login.css";
 
 export const Login = () => {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const { user, updateUser } = useContext(UserContext);
   const [user, setUser] = useState([]);
   const [submitted, setSubmitted] = useState(false);
   const navigate = useNavigate();
-  const toast = useRef([]);
 
-  const addContentErrorMessage = () => {
-    clearMessages();
-    toast.current.show({ severity: 'error', summary: 'Error', detail: 'Invalid email or password', closable: true });
-  }
+  const showErrorAlert = () => {
+    Swal.fire({
+      icon: 'error',
+      title: 'Login Failed',
+      text: 'Invalid email or password',
+      confirmButtonColor: '#DC2626'
+    });
+  };
 
-  const clearMessages = () => {
-    toast.current.clear();
+  const showSuccessAlert = () => {
+    Swal.fire({
+      icon: 'success',
+      title: 'Login Successful',
+      text: 'Welcome back!',
+      confirmButtonColor: '#1D4ED8'
+    }).then(() => {
+      navigate("/home");
+    });
   };
 
   const submitLogin = (e) => {
     e.preventDefault();
     login();
-  }
+  };
 
   useEffect(() => {
     if (user.length > 0) {
-      navigate("/home");
+      showSuccessAlert();
     } else if (submitted) {
-      addContentErrorMessage();
+      showErrorAlert();
     }
   }, [user]);
-
 
   const login = async () => {
     const service = new UserService();
     const us = await service.login(email, password);
-    // updateUser(us);
     const localStorageService = new LocalStorageService();
     localStorageService.addLoggedUser(us);
     setUser(us);
     setSubmitted(true);
-  }
-
+  };
 
   return (
-    <div>
-      <div className='login-container'>
-        <Toast ref={toast} />
-        <form className='' onSubmit={e => submitLogin(e)}>
-          <h2>Sign In</h2>
-
-          {/* email input*/}
-          <div>
-            <label htmlFor="email">Email</label>
-            <InputText id="email" value={email} onChange={(e) => { setEmail(e.target.value); clearMessages(); }} type='email' />
+    <div className="flex items-center justify-center min-h-screen bg-cover bg-center p-6" style={{ backgroundImage: "url('images/ciudad11.jpg')" }}>
+      <div className="bg-black bg-opacity-75 p-8 rounded-md shadow-md max-w-sm w-full text-white relative">
+        <div className="absolute top-8 left-0 w-full h-20 bg-white flex items-center justify-center">
+          <img src="images/logo.png" alt="Logo" className="h-12 w-auto" />
+        </div>
+        <h2 className="text-2xl font-bold mt-28 mb-6 text-center text-sky-500">Sign In</h2>
+        <form onSubmit={submitLogin} className="flex flex-col gap-4">
+          <div className="w-full">
+            <label htmlFor="email" className="block text-sm font-medium mb-1 text-gray-300">Email</label>
+            <input 
+              id="email" 
+              type="email" 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
+              className="w-full p-3 rounded-md border border-gray-500 text-black" 
+              required 
+            />
           </div>
-
-          {/* password input */}
-          <div>
-            <label htmlFor="password">Password</label>
-            <Password id="password" value={password} onChange={(e) => { setPassword(e.target.value); clearMessages(); }} type='password' feedback={false} toggleMask />
+          <div className="w-full">
+            <label htmlFor="password" className="block text-sm font-medium mb-1 text-gray-300">Password</label>
+            <input 
+              id="password" 
+              type="password" 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
+              className="w-full p-3 rounded-md border border-gray-500 text-black" 
+              required 
+            />
           </div>
-
-          {/* login button */}
-          <Button icon="pi pi-sign-in" label="Login" iconPos="right" type='submit' />
-
-          {/* redirect link */}
-          <p>Don't have an account yet? <a href='/register' className='redirect-link'>Sign Up</a></p>
+          <div className="mt-8">
+            <button 
+              type="submit" 
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md">
+              Login
+            </button>
+          </div>
+          <p className="mt-4 text-sm text-center">
+            Don't have an account yet? <a href='/register' className='text-blue-400 hover:underline'>Sign Up</a>
+          </p>
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
